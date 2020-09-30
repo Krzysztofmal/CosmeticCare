@@ -1,2 +1,4 @@
-# HealthCosmetic
 ## CosmeticCare
+
+Dokumentacja, screeny oraz opis:
+
