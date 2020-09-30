@@ -13,3 +13,7 @@ https://github.com/Krzysztofmal/CosmeticCare/blob/master/DokumentacjaCosmeticCar
 
 
 ### Mockupy
+<img src="https://github.com/Krzysztofmal/CosmeticCare/blob/master/g1.png" width=50% height=50%>
+<img src="https://github.com/Krzysztofmal/CosmeticCare/blob/master/g2.png" width=50% height=50%>
+<img src="https://github.com/Krzysztofmal/CosmeticCare/blob/master/g3.png" width=50% height=50%>
+<img src="https://github.com/Krzysztofmal/CosmeticCare/blob/master/g6.png" width=50% height=50%>
