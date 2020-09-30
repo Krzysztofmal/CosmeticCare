@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@mipmap/bg"
+    tools:context="com.jkero.blackhawk.testaparatuocr.MenuActivity"
+
+    android:weightSum="10"
+    tools:layout_editor_absoluteY="25dp">
+
+
+    
+    <RelativeLayout
+        android:layout_weight="2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_toLeftOf="@+id/textMenu"
+            android:layout_centerVertical="true"
+            android:src="@drawable/chem"
+            android:layout_marginRight="10dp"
+            />
+
+        <TextView
+            android:id="@+id/textMenu"
+            android:text="@string/menu_title"
+            android:textSize="34sp"
+            android:textColor="@android:color/white"
+            android:layout_centerInParent="true"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+
+    </RelativeLayout>
+
+
+
+    <GridLayout
+        android:layout_weight="8"
+        android:columnCount="2"
+        android:rowCount="2"
+        android:columnOrderPreserved="false"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:padding="14dp">
+
+        <!-- ROW 1 !-->
+
+        <!-- COLUMN 1 !-->
+        <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="4dp"
+            android:layout_marginTop="20dp"
+            android:layout_columnWeight="1"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_rowWeight="1"
+            android:onClick="goBarcode"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="8dp"
+            android:foreground="?android:attr/selectableItemBackground"
+
+            android:clickable="true">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:layout_margin="16dp"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/barcode100" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/menu_start"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"
+
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+
+        <!-- COLUMN 2 !-->
+        <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            app:cardElevation="8dp"
+            app:cardCornerRadius="8dp"
+            android:onClick="goAlergens"
+            android:foreground="?android:attr/selectableItemBackground"
+
+            android:clickable="true"
+            >
+
+            <LinearLayout
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:layout_margin="16dp"
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:src="@drawable/list96"
+                    android:layout_gravity="center_horizontal"
+
+                    android:layout_width="50dp"
+                    android:layout_height="50dp" />
+
+                <TextView
+                    android:text="@string/menu_list"
+                    android:textAlignment="center"
+                    android:layout_gravity="center"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+
+        <!-- ROW 2 !-->
+
+        <!-- COLUMN 1 !-->
+        <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_marginBottom="75dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:onClick="aboutApp"
+            app:cardElevation="8dp"
+            app:cardCornerRadius="8dp"
+            android:foreground="?android:attr/selectableItemBackground"
+
+            android:clickable="true"
+
+            >
+
+            <LinearLayout
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:layout_margin="16dp"
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                >
+
+                <ImageView
+                    android:src="@drawable/info96"
+                    android:layout_gravity="center_horizontal"
+
+                    android:layout_width="50dp"
+                    android:layout_height="50dp" />
+
+                <TextView
+                    android:text="@string/menu_about"
+                    android:textAlignment="center"
+                    android:layout_gravity="center"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+
+        <!-- COLUMN 2 !-->
+        <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_marginBottom="75dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            app:cardElevation="8dp"
+            app:cardCornerRadius="8dp"
+            android:onClick="exit"
+            android:foreground="?android:attr/selectableItemBackground"
+
+            android:clickable="true"
+
+            >
+
+            <LinearLayout
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:layout_margin="16dp"
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/exit80" />
+
+                <TextView
+                    android:text="@string/menu_exit"
+                    android:layout_gravity="center"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+
+
+    </GridLayout>
+
+    <com.google.android.gms.ads.AdView
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        ads:adSize="BANNER"
+        ads:adUnitId="ca-app-pub-8457083331420228/7755556465">
+        <!--
+        ca-app-pub-3940256099942544/6300978111 test
+        ca-app-pub-8457083331420228/7755556465 moj
+        !-->
+    </com.google.android.gms.ads.AdView>
+
+    <!--
+    <Button
+        android:id="@+id/btnAlergens"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="90dp"
+        android:drawableTop="@drawable/ic_widgets_black_24dp"
+        android:onClick="goAlergens"
+        android:text="SKŁADNIKI"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnExit"
+        android:layout_width="149dp"
+        android:layout_height="155dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="35dp"
+        android:drawableTop="@drawable/ic_exit_to_app_red_48dp"
+        android:onClick="exit"
+        android:text="Wyjście"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnAlergens" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="90dp"
+        android:drawableTop="@drawable/ic_action_barcode_1"
+        android:onClick="goBarcode"
+        android:text="SKANUJ"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="35dp"
+        android:text="Button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button3" />
+        !-->
+
+</LinearLayout>

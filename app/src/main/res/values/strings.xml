@@ -1,0 +1,48 @@
+<resources>
+    <string name="app_name">Cosmetic Care INCI Scanner</string>
+    <string name="title_activity_list" translatable="false">ListActivity</string>
+    <string name="title_activity_result" translatable="false">ResultActivity</string>
+    <string name="about_app1" translatable="false">The application has components in its database that we should pay attention to. Those that do not have a harmful effect on our body are not included. However, those that cause allergies or are harmful are divided into 3 categories :</string>
+    <string name="about_app2" translatable="false">Minor harmful, the amount does not cause side effects or does not cause any negative reactions of the body</string>
+    <string name="about_app3" translatable="false">Pay attention to this ingredient because it can potentially be harmful to us</string>
+    <string name="about_app4" translatable="false">It is best to avoid this ingredient because it is harmful and has a negative effect on our body</string>
+    <string name="about_app5" translatable="false">To start checking the product, click "Start scanning" and scan the product barcode. Then we will receive a response from the application (the result or we will be asked to scan the ingredients of the product, because the product is not in the database). From the main menu we can go to the "list of ingredients", where we can select the ingredients (by holding down the finger for longer) that we want to display at the beginning of the results list. In addition, by clicking on each component, we can preview a short description. WARNING! When scanning ingredients, take care of the best lighting, shadows or shiny packaging can distort the results. The quality of the rear camera also affects the result.</string>
+
+    <string name="menu_title" translatable="false">Menu</string>
+    <string name="menu_start" translatable="false">Start\nscanning</string>
+    <string name="menu_list" translatable="false">List\nof ingredients</string>
+    <string name="menu_exit" translatable="false">Exit</string>
+    <string name="scan_title" translatable="false">Scanned barcode: \n</string>
+    <string name="scan_complete" translatable="false">The scan has been completed! \n</string>
+    <string name="ingredients_title" translatable="false">The list of ingredients: \n</string>
+
+    <string name="scan_dialog_title" translatable="false">Scanning ingredients</string>
+    <string name="scan_dialog_info" translatable="false">There are no ingredients for this product in the database. Place the product label in front of the camera lens and rotate for 15 seconds to make the label easier to read(Ingredients:). Also remember about the lighting that affects the quality of the reading.</string>
+
+    <string name="scan_result_title" translatable="false">Thank you for scanning the product ingredients!\nA suitable label for the product will be created soon.\n</string>
+    <string name="scan_result_finish" translatable="false">Scanning is complete!</string>
+    <string name="scan_already_scanned" translatable="false">The ingredients of this product have already been scanned by this device. Click OK to view the list and wait for official label. </string>
+    <string name="scan_done" translatable="false">Your scan has been submitted for analysis! A label will be created for this product soon.</string>
+    <string name="scan_quality" translatable="false">The scan is probably unreadable. Try again.</string>
+    <string name="set_language" translatable="false">en.php</string>
+
+
+
+
+    <!-- Emoticons -->
+    <array name="emoticons">
+        <item>@drawable/e1</item>
+        <item>@drawable/e1</item>
+        <item>@drawable/e2</item>
+        <item>@drawable/e3</item>
+    </array>
+
+    <!-- stars -->
+    <array name="stars">
+        <item>@drawable/s1</item>
+        <item>@drawable/s2</item>
+    </array>
+    <string name="menu_about" translatable="false">About\nthe application</string>
+
+
+</resources>

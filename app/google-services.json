@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "323360032973",
+    "firebase_url": "https://cosmeticapp-b64bd.firebaseio.com",
+    "project_id": "cosmeticapp-b64bd",
+    "storage_bucket": "cosmeticapp-b64bd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:323360032973:android:7cc77669c0dcec72918184",
+        "android_client_info": {
+          "package_name": "com.jkero.blackhawk.testaparatuocr"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "323360032973-hm6fbde40bulm1741gmo8l0ks4svltcg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jkero.blackhawk.testaparatuocr",
+            "certificate_hash": "f0cc96968cdb8adbfa820d46883a03212b4abd08"
+          }
+        },
+        {
+          "client_id": "323360032973-c6j9livqo93do191nf8r00528tdsrcb6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDWNXtplZuJ_HEREbZjVhzGd_sNinJdnyE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "323360032973-c6j9livqo93do191nf8r00528tdsrcb6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
