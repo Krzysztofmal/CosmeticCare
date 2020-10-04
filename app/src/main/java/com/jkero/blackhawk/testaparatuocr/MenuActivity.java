@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.os.Handler;
 //import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -55,20 +56,19 @@ public class MenuActivity extends AppCompatActivity {
 
         //9B658CACCC5483A78F8EBFD7CE7F3C73
 
-        MobileAds.initialize(this,"ca-app-pub-8457083331420228~3984558764");
+        MobileAds.initialize(this, "ca-app-pub-8457083331420228~3984558764");
         mInterstitialAd = new InterstitialAd(this);
         mInterstitialAd.setAdUnitId("ca-app-pub-8457083331420228/8858778787");
         //mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712"); // test
         mInterstitialAd.loadAd(new AdRequest.Builder().build());
 
 
-
         mInterstitialAd.setAdListener(new AdListener() {
-                                          @Override
-                                          public void onAdLoaded() {
-                                              mInterstitialAd.show();
-                                          }
-                                      });
+            @Override
+            public void onAdLoaded() {
+                mInterstitialAd.show();
+            }
+        });
 
 
 
@@ -84,28 +84,23 @@ public class MenuActivity extends AppCompatActivity {
         });
         */
 
-
-
-
+/*
         if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(MenuActivity.this,
                     new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
                     RequestGPSPermissionID);
             return;
         }
-
+*/
 
     }
 
-
+/*
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int [] grantResults){
-        switch (requestCode)
-        {
-            case RequestGPSPermissionID:
-            {
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
-                {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case RequestGPSPermissionID: {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                         return;
                     }
@@ -114,7 +109,7 @@ public class MenuActivity extends AppCompatActivity {
             }
         }
     }
-
+    */
 
 
     public void goAlergens(View view) {
@@ -141,7 +136,8 @@ public class MenuActivity extends AppCompatActivity {
                 finish();
             }
         }, 200);
-        System.out.println("MY LANGUAGE:"+getString(R.string.set_language)+"x");
+        //System.out.println("MY LANGUAGE:"+getString(R.string.set_language)+"x");
+        Log.i("MenuActivity", getString(R.string.set_language));
 
     }
 
@@ -168,7 +164,7 @@ public class MenuActivity extends AppCompatActivity {
         }, 200);
     }
 
-    private void showCustomDialog(){
+    private void showCustomDialog() {
         myDialog = new Dialog(MenuActivity.this);
         myDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         myDialog.setContentView(R.layout.custom_dialog);

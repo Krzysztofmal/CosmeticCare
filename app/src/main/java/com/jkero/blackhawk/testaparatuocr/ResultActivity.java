@@ -53,13 +53,12 @@ public class ResultActivity extends AppCompatActivity implements AdapterView.OnI
         db = new DbHandler(this);
         final Cursor datas = db.getData();
         datasList = new ArrayList<Integer>();
-        while (datas.moveToNext()){
+        while (datas.moveToNext()) {
             datasList.add(datas.getInt(0));
         }
 
 
-
-        MobileAds.initialize(this,"ca-app-pub-8457083331420228~3984558764");
+        MobileAds.initialize(this, "ca-app-pub-8457083331420228~3984558764");
         mInterstitialAd = new InterstitialAd(this);
         mInterstitialAd.setAdUnitId("ca-app-pub-8457083331420228/3422641357");
         //mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712"); // test
@@ -79,7 +78,6 @@ public class ResultActivity extends AppCompatActivity implements AdapterView.OnI
         });
 
 
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
 
@@ -87,7 +85,7 @@ public class ResultActivity extends AppCompatActivity implements AdapterView.OnI
 
         lvIngredients = (ListView) findViewById(R.id.lvIngredients);
         textView = (TextView) findViewById(R.id.tvBarcode);
-        textView.append(" "+BarcodeActivity.barcode);
+        textView.append(" " + BarcodeActivity.barcode);
 
         emoticons = getResources().obtainTypedArray(R.array.emoticons);
         stars = getResources().obtainTypedArray(R.array.stars);
@@ -103,37 +101,27 @@ public class ResultActivity extends AppCompatActivity implements AdapterView.OnI
                             JSONArray jsonArray = new JSONArray(response);
 
 
-                            for (Ingredient i : Ingredient.fromJsonList(jsonArray)){
+                            for (Ingredient i : Ingredient.fromJsonList(jsonArray)) {
 
 
+                                if (!datasList.isEmpty()) {
 
-
-                                if (!datasList.isEmpty()){
-
-                                    if(datasList.contains(i.getId_ingredient())) {
-                                        rowItems.add(0, new RowIngredient(i.getName_ingredient(), i.getDescription(), emoticons.getResourceId(i.getDanger(), 0), stars.getResourceId(1, 0), i.getId_ingredient()));
+                                    if (datasList.contains(i.getIdIngredient())) {
+                                        rowItems.add(0, new RowIngredient(i.getNameIngredient(), i.getDescription(), emoticons.getResourceId(i.getDanger(), 0), stars.getResourceId(1, 0), i.getIdIngredient()));
                                     } else {
-                                        if (rowItems.size()==0) {
-                                            rowItems.add(0,new RowIngredient(i.getName_ingredient(), i.getDescription(), emoticons.getResourceId(i.getDanger(), 0), stars.getResourceId(0, 0), i.getId_ingredient()));
-                                        } else if (rowItems.size()==1) {
-                                            rowItems.add(1,new RowIngredient(i.getName_ingredient(), i.getDescription(), emoticons.getResourceId(i.getDanger(), 0), stars.getResourceId(0, 0), i.getId_ingredient()));
+                                        if (rowItems.size() == 0) {
+                                            rowItems.add(0, new RowIngredient(i.getNameIngredient(), i.getDescription(), emoticons.getResourceId(i.getDanger(), 0), stars.getResourceId(0, 0), i.getIdIngredient()));
+                                        } else if (rowItems.size() == 1) {
+                                            rowItems.add(1, new RowIngredient(i.getNameIngredient(), i.getDescription(), emoticons.getResourceId(i.getDanger(), 0), stars.getResourceId(0, 0), i.getIdIngredient()));
 
-                                        } else if (rowItems.size()>1){
-                                            rowItems.add(rowItems.size() - 1, new RowIngredient(i.getName_ingredient(), i.getDescription(), emoticons.getResourceId(i.getDanger(), 0), stars.getResourceId(0, 0), i.getId_ingredient()));
+                                        } else if (rowItems.size() > 1) {
+                                            rowItems.add(rowItems.size() - 1, new RowIngredient(i.getNameIngredient(), i.getDescription(), emoticons.getResourceId(i.getDanger(), 0), stars.getResourceId(0, 0), i.getIdIngredient()));
                                         }
                                     }
                                 } else {
-                                    rowItems.add(new RowIngredient(i.getName_ingredient(), i.getDescription(), emoticons.getResourceId(i.getDanger(), 0), stars.getResourceId(0, 0), i.getId_ingredient()));
+                                    rowItems.add(new RowIngredient(i.getNameIngredient(), i.getDescription(), emoticons.getResourceId(i.getDanger(), 0), stars.getResourceId(0, 0), i.getIdIngredient()));
 
                                 }
-
-
-
-
-
-
-
-
 
 
                             }
@@ -164,7 +152,6 @@ public class ResultActivity extends AppCompatActivity implements AdapterView.OnI
 
 
         lvIngredients.setOnItemClickListener(this);
-
 
 
     }

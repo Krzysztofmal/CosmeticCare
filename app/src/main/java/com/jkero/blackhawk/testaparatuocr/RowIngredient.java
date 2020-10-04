@@ -3,14 +3,13 @@ package com.jkero.blackhawk.testaparatuocr;
 public class RowIngredient {
 
 
-
     private int id;
     private String ingredientName;
     private String ingredientDesc;
     private int imageStar;
     private int imageEmoticon;
 
-    public RowIngredient(String ingredientName, String ingredientDesc, int imageStar, int imageEmoticon,int id) {
+    public RowIngredient(String ingredientName, String ingredientDesc, int imageStar, int imageEmoticon, int id) {
         this.ingredientName = ingredientName;
         this.ingredientDesc = ingredientDesc;
         this.imageStar = imageStar;

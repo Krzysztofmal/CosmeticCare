@@ -55,7 +55,7 @@ public class ScanResultActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
 
-        MobileAds.initialize(this,"ca-app-pub-8457083331420228~3984558764");
+        MobileAds.initialize(this, "ca-app-pub-8457083331420228~3984558764");
         mInterstitialAd = new InterstitialAd(this);
         mInterstitialAd.setAdUnitId("ca-app-pub-8457083331420228/7283609716");
         //mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712"); // test
@@ -77,7 +77,7 @@ public class ScanResultActivity extends AppCompatActivity {
         db = new DbHandler(this);
         final Cursor datas = db.getData();
         datasList = new ArrayList<Integer>();
-        while (datas.moveToNext()){
+        while (datas.moveToNext()) {
             datasList.add(datas.getInt(0));
         }
 
@@ -104,10 +104,10 @@ public class ScanResultActivity extends AppCompatActivity {
         builder.setTitle(getString(R.string.scan_result_finish));
         AlertDialog alert;
 
-        switch (MainActivity.mess){
+        switch (MainActivity.mess) {
             case "scanned by this device":
                 //AlertDialog alert2;
-                builder.setPositiveButton("OK",new DialogInterface.OnClickListener() {
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
@@ -122,31 +122,30 @@ public class ScanResultActivity extends AppCompatActivity {
 
 
                                             JSONArray jsonArray = new JSONArray(response);
-                                            for (Ingredient i : Ingredient.fromJsonList(jsonArray)){
+                                            for (Ingredient i : Ingredient.fromJsonList(jsonArray)) {
 
 
+                                                if (!datasList.isEmpty()) {
 
-                                                if (!datasList.isEmpty()){
-
-                                                    if(datasList.contains(i.getId_ingredient())) {
-                                                        rowItems.add(0, new RowIngredient(i.getName_ingredient(), i.getDescription(), emoticons.getResourceId(i.getDanger(), 0), stars.getResourceId(1, 0), i.getId_ingredient()));
+                                                    if (datasList.contains(i.getIdIngredient())) {
+                                                        rowItems.add(0, new RowIngredient(i.getNameIngredient(), i.getDescription(), emoticons.getResourceId(i.getDanger(), 0), stars.getResourceId(1, 0), i.getIdIngredient()));
                                                     } else {
-                                                        if (rowItems.size()==0) {
-                                                            rowItems.add(0,new RowIngredient(i.getName_ingredient(), i.getDescription(), emoticons.getResourceId(i.getDanger(), 0), stars.getResourceId(0, 0), i.getId_ingredient()));
-                                                        } else if (rowItems.size()==1) {
-                                                            rowItems.add(1,new RowIngredient(i.getName_ingredient(), i.getDescription(), emoticons.getResourceId(i.getDanger(), 0), stars.getResourceId(0, 0), i.getId_ingredient()));
+                                                        if (rowItems.size() == 0) {
+                                                            rowItems.add(0, new RowIngredient(i.getNameIngredient(), i.getDescription(), emoticons.getResourceId(i.getDanger(), 0), stars.getResourceId(0, 0), i.getIdIngredient()));
+                                                        } else if (rowItems.size() == 1) {
+                                                            rowItems.add(1, new RowIngredient(i.getNameIngredient(), i.getDescription(), emoticons.getResourceId(i.getDanger(), 0), stars.getResourceId(0, 0), i.getIdIngredient()));
 
-                                                        } else if (rowItems.size()>1){
-                                                            rowItems.add(rowItems.size() - 1, new RowIngredient(i.getName_ingredient(), i.getDescription(), emoticons.getResourceId(i.getDanger(), 0), stars.getResourceId(0, 0), i.getId_ingredient()));
+                                                        } else if (rowItems.size() > 1) {
+                                                            rowItems.add(rowItems.size() - 1, new RowIngredient(i.getNameIngredient(), i.getDescription(), emoticons.getResourceId(i.getDanger(), 0), stars.getResourceId(0, 0), i.getIdIngredient()));
                                                         }
                                                     }
                                                 } else {
-                                                    rowItems.add(new RowIngredient(i.getName_ingredient(), i.getDescription(), emoticons.getResourceId(i.getDanger(), 0), stars.getResourceId(0, 0), i.getId_ingredient()));
+                                                    rowItems.add(new RowIngredient(i.getNameIngredient(), i.getDescription(), emoticons.getResourceId(i.getDanger(), 0), stars.getResourceId(0, 0), i.getIdIngredient()));
 
                                                 }
 
                                             }
-                                            CustomAdapter adapter = new CustomAdapter(getApplicationContext(),rowItems);
+                                            CustomAdapter adapter = new CustomAdapter(getApplicationContext(), rowItems);
                                             listviewIngredients.setAdapter(adapter);
 
                                             listviewIngredients.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -164,7 +163,6 @@ public class ScanResultActivity extends AppCompatActivity {
                                             });
 
 
-
                                         } catch (JSONException e) {
                                             e.printStackTrace();
                                         }
@@ -177,9 +175,9 @@ public class ScanResultActivity extends AppCompatActivity {
                                     public void onErrorResponse(VolleyError error) {
 
                                     }
-                                }){
-                            protected Map<String,String> getParams () throws AuthFailureError {
-                                Map<String,String> params = new HashMap<>();
+                                }) {
+                            protected Map<String, String> getParams() throws AuthFailureError {
+                                Map<String, String> params = new HashMap<>();
                                 params.put("barcode", BarcodeActivity.barcode);
                                 params.put("device_id", MainActivity.deviceId);
                                 return params;
@@ -187,7 +185,6 @@ public class ScanResultActivity extends AppCompatActivity {
                         };
 
                         RequestHandler.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
-
 
 
                     }
@@ -199,7 +196,7 @@ public class ScanResultActivity extends AppCompatActivity {
                 break;
             case "zapisywanie do bazy skanu":
 
-                builder.setPositiveButton("OK",new DialogInterface.OnClickListener() {
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
@@ -214,31 +211,30 @@ public class ScanResultActivity extends AppCompatActivity {
 
 
                                             JSONArray jsonArray = new JSONArray(response);
-                                            for (Ingredient i : Ingredient.fromJsonList(jsonArray)){
+                                            for (Ingredient i : Ingredient.fromJsonList(jsonArray)) {
 
 
+                                                if (!datasList.isEmpty()) {
 
-                                                if (!datasList.isEmpty()){
-
-                                                    if(datasList.contains(i.getId_ingredient())) {
-                                                        rowItems.add(0, new RowIngredient(i.getName_ingredient(), i.getDescription(), emoticons.getResourceId(i.getDanger(), 0), stars.getResourceId(1, 0), i.getId_ingredient()));
+                                                    if (datasList.contains(i.getIdIngredient())) {
+                                                        rowItems.add(0, new RowIngredient(i.getNameIngredient(), i.getDescription(), emoticons.getResourceId(i.getDanger(), 0), stars.getResourceId(1, 0), i.getIdIngredient()));
                                                     } else {
-                                                        if (rowItems.size()==0) {
-                                                            rowItems.add(0,new RowIngredient(i.getName_ingredient(), i.getDescription(), emoticons.getResourceId(i.getDanger(), 0), stars.getResourceId(0, 0), i.getId_ingredient()));
-                                                        } else if (rowItems.size()==1) {
-                                                            rowItems.add(1,new RowIngredient(i.getName_ingredient(), i.getDescription(), emoticons.getResourceId(i.getDanger(), 0), stars.getResourceId(0, 0), i.getId_ingredient()));
+                                                        if (rowItems.size() == 0) {
+                                                            rowItems.add(0, new RowIngredient(i.getNameIngredient(), i.getDescription(), emoticons.getResourceId(i.getDanger(), 0), stars.getResourceId(0, 0), i.getIdIngredient()));
+                                                        } else if (rowItems.size() == 1) {
+                                                            rowItems.add(1, new RowIngredient(i.getNameIngredient(), i.getDescription(), emoticons.getResourceId(i.getDanger(), 0), stars.getResourceId(0, 0), i.getIdIngredient()));
 
-                                                        } else if (rowItems.size()>1){
-                                                            rowItems.add(rowItems.size() - 1, new RowIngredient(i.getName_ingredient(), i.getDescription(), emoticons.getResourceId(i.getDanger(), 0), stars.getResourceId(0, 0), i.getId_ingredient()));
+                                                        } else if (rowItems.size() > 1) {
+                                                            rowItems.add(rowItems.size() - 1, new RowIngredient(i.getNameIngredient(), i.getDescription(), emoticons.getResourceId(i.getDanger(), 0), stars.getResourceId(0, 0), i.getIdIngredient()));
                                                         }
                                                     }
                                                 } else {
-                                                    rowItems.add(new RowIngredient(i.getName_ingredient(), i.getDescription(), emoticons.getResourceId(i.getDanger(), 0), stars.getResourceId(0, 0), i.getId_ingredient()));
+                                                    rowItems.add(new RowIngredient(i.getNameIngredient(), i.getDescription(), emoticons.getResourceId(i.getDanger(), 0), stars.getResourceId(0, 0), i.getIdIngredient()));
 
                                                 }
 
                                             }
-                                            CustomAdapter adapter = new CustomAdapter(getApplicationContext(),rowItems);
+                                            CustomAdapter adapter = new CustomAdapter(getApplicationContext(), rowItems);
                                             listviewIngredients.setAdapter(adapter);
 
                                             listviewIngredients.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -256,7 +252,6 @@ public class ScanResultActivity extends AppCompatActivity {
                                             });
 
 
-
                                         } catch (JSONException e) {
                                             e.printStackTrace();
                                         }
@@ -269,9 +264,9 @@ public class ScanResultActivity extends AppCompatActivity {
                                     public void onErrorResponse(VolleyError error) {
 
                                     }
-                                }){
-                            protected Map<String,String> getParams () throws AuthFailureError {
-                                Map<String,String> params = new HashMap<>();
+                                }) {
+                            protected Map<String, String> getParams() throws AuthFailureError {
+                                Map<String, String> params = new HashMap<>();
                                 params.put("barcode", BarcodeActivity.barcode);
                                 params.put("device_id", MainActivity.deviceId);
                                 return params;
@@ -279,7 +274,6 @@ public class ScanResultActivity extends AppCompatActivity {
                         };
 
                         RequestHandler.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
-
 
 
                     }
@@ -296,7 +290,7 @@ public class ScanResultActivity extends AppCompatActivity {
                 break;
             case "wiecej jak 4":
 
-                builder.setPositiveButton("OK",new DialogInterface.OnClickListener() {
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         finish();
@@ -309,7 +303,7 @@ public class ScanResultActivity extends AppCompatActivity {
             default:
 
                 //tez uzupelnic liste?
-                builder.setPositiveButton("OK",new DialogInterface.OnClickListener() {
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         //finish();
@@ -322,15 +316,11 @@ public class ScanResultActivity extends AppCompatActivity {
         }
 
 
-
-
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-
-
 
 
     }

@@ -8,34 +8,35 @@ import java.util.ArrayList;
 
 public class Ingredient {
 
-    private Integer id_ingredient;
-    private String name_ingredient;
+    private Integer idIngredient;
+    private String nameIngredient;
     private Integer danger;
     private String description;
 
-    public Ingredient(){}
+    public Ingredient() {
+    }
 
-    public Ingredient(Integer id_ingredient, String name_ingredient, Integer danger, String description) {
-        this.id_ingredient = id_ingredient;
-        this.name_ingredient = name_ingredient;
+    public Ingredient(Integer idIngredient, String nameIngredient, Integer danger, String description) {
+        this.idIngredient = idIngredient;
+        this.nameIngredient = nameIngredient;
         this.danger = danger;
         this.description = description;
     }
 
-    public Integer getId_ingredient() {
-        return id_ingredient;
+    public Integer getIdIngredient() {
+        return idIngredient;
     }
 
-    public void setId_ingredient(Integer id_ingredient) {
-        this.id_ingredient = id_ingredient;
+    public void setIdIngredient(Integer idIngredient) {
+        this.idIngredient = idIngredient;
     }
 
-    public String getName_ingredient() {
-        return name_ingredient;
+    public String getNameIngredient() {
+        return nameIngredient;
     }
 
-    public void setName_ingredient(String name_ingredient) {
-        this.name_ingredient = name_ingredient;
+    public void setNameIngredient(String nameIngredient) {
+        this.nameIngredient = nameIngredient;
     }
 
     public Integer getDanger() {
@@ -61,8 +62,8 @@ public class Ingredient {
         Ingredient b = new Ingredient();
         // Deserialize json into object fields
         try {
-            b.setId_ingredient(jsonObject.getInt("id_ingredient"));
-            b.setName_ingredient(jsonObject.getString("name_ingredient"));
+            b.setIdIngredient(jsonObject.getInt("id_ingredient"));
+            b.setNameIngredient(jsonObject.getString("name_ingredient"));
             b.setDanger(jsonObject.getInt("danger"));
             b.setDescription(jsonObject.getString("description"));
             //System.out.println(b.getName_ingredient());
@@ -81,7 +82,7 @@ public class Ingredient {
         JSONObject ingredientsJson;
         ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>(jsonArray.length());
         // Process each result in json array, decode and convert to business object
-        for (int i=0; i < jsonArray.length(); i++) {
+        for (int i = 0; i < jsonArray.length(); i++) {
             try {
                 ingredientsJson = jsonArray.getJSONObject(i);
             } catch (Exception e) {
@@ -97,10 +98,6 @@ public class Ingredient {
 
         return ingredients;
     }
-
-
-
-
 
 
 }

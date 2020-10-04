@@ -36,9 +36,8 @@ public class CustomAdapter extends BaseAdapter {
     }
 
 
-
     // Private view holder class
-    private class ViewHolder{
+    private class ViewHolder {
         ImageView imageStar;
         ImageView imageEmoticon;
         TextView ingredientName;
@@ -46,51 +45,45 @@ public class CustomAdapter extends BaseAdapter {
     }
 
 
-
-
     @Override
     public View getView(int i, View convertView, ViewGroup parent) {
 
 
-        View v = convertView;
+        View view = convertView;
 
-        if (v == null) {
-            LayoutInflater vi;
-            vi = LayoutInflater.from(context);
-            v = vi.inflate(R.layout.list_ingredients, null);
+        if (view == null) {
+            LayoutInflater layoutInflater;
+            layoutInflater = LayoutInflater.from(context);
+            view = layoutInflater.inflate(R.layout.list_ingredients, null);
         }
 
         //Item p = getItem(position);
-        RowIngredient p = (RowIngredient) getItem(i);
+        RowIngredient rowIngredient = (RowIngredient) getItem(i);
 
-        if (p != null) {
-            TextView tt1 = (TextView) v.findViewById(R.id.tvName);
-            TextView tt2 = (TextView) v.findViewById(R.id.tvDesc);
-            ImageView tt3 = (ImageView) v.findViewById(R.id.imageEmoticon);
-            ImageView tt4 = (ImageView) v.findViewById(R.id.imageStar);
+        if (rowIngredient != null) {
+            TextView tvIngredientName = (TextView) view.findViewById(R.id.tvName);
+            TextView tvDescription = (TextView) view.findViewById(R.id.tvDesc);
+            ImageView ivEmoticon = (ImageView) view.findViewById(R.id.imageEmoticon);
+            ImageView ivStar = (ImageView) view.findViewById(R.id.imageStar);
 
-            if (tt1 != null) {
-                tt1.setText(p.getIngredientName());
+            if (tvIngredientName != null) {
+                tvIngredientName.setText(rowIngredient.getIngredientName());
             }
 
-            if (tt2 != null) {
-                tt2.setText(p.getIngredientDesc());
+            if (tvDescription != null) {
+                tvDescription.setText(rowIngredient.getIngredientDesc());
             }
 
-            if (tt3 != null) {
-                tt3.setImageResource(p.getImageEmoticon());
+            if (ivEmoticon != null) {
+                ivEmoticon.setImageResource(rowIngredient.getImageEmoticon());
             }
 
-            if (tt4 != null) {
-                tt4.setImageResource(p.getImageStar());
+            if (ivStar != null) {
+                ivStar.setImageResource(rowIngredient.getImageStar());
             }
         }
 
-        return v;
-
-
-
-
+        return view;
 
 
     }

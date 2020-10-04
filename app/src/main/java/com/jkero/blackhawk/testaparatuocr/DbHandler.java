@@ -19,7 +19,7 @@ public class DbHandler extends SQLiteOpenHelper {
 
     SQLiteDatabase database;
 
-    public DbHandler(Context context){
+    public DbHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         database = getWritableDatabase();
     }
@@ -36,25 +36,24 @@ public class DbHandler extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 
-    public boolean addIngredient(Integer id){
+    public boolean addIngredient(Integer id) {
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COLUMN_ID,id);
-        long result = database.insert(TABLE_NAME,null,contentValues);
+        contentValues.put(COLUMN_ID, id);
+        long result = database.insert(TABLE_NAME, null, contentValues);
         if (result == 1) {
             return false;
-        }
-        else {
+        } else {
             return true;
         }
     }
 
-    public Cursor getData(){
+    public Cursor getData() {
         Cursor data = database.rawQuery("SELECT * FROM " + TABLE_NAME, null);
         return data;
     }
 
-    public Integer deleteIngredient(Integer id){
-        return database.delete(TABLE_NAME,"id_ingredient=?",new String[] {id.toString()});
+    public Integer deleteIngredient(Integer id) {
+        return database.delete(TABLE_NAME, "id_ingredient=?", new String[]{id.toString()});
     }
 
 

@@ -38,20 +38,13 @@ public class BarcodeActivity extends AppCompatActivity implements ZXingScannerVi
     private List<Product> productList;
     private boolean inDb;
 
-
     final int RequestCameraPermissionID = 1001;
 
-
-
-
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int [] grantResults){
-        switch (requestCode)
-        {
-            case RequestCameraPermissionID:
-            {
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
-                {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case RequestCameraPermissionID: {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                         return;
                     }
@@ -66,17 +59,10 @@ public class BarcodeActivity extends AppCompatActivity implements ZXingScannerVi
         super.onCreate(savedInstanceState);
         barcode = "";
 
-
-
-
         scannerView = new ZXingScannerView(this);
         setContentView(scannerView);
 
-        //scannerView.startCamera();
-
-        //productList = new ArrayList<Product>();
         inDb = false;
-
 
         if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(BarcodeActivity.this,
@@ -84,15 +70,7 @@ public class BarcodeActivity extends AppCompatActivity implements ZXingScannerVi
                     RequestCameraPermissionID);
             return;
         }
-
-
-
-
-
-
     }
-
-
 
     @Override
     public void onResume() {
@@ -101,38 +79,10 @@ public class BarcodeActivity extends AppCompatActivity implements ZXingScannerVi
         scannerView.startCamera();
     }
 
-
-
-    private static String uniqueID = null;
-    private static final String PREF_UNIQUE_ID = "PREF_UNIQUE_ID";
-
-    public synchronized static String id(Context context) {
-        if (uniqueID == null) {
-            SharedPreferences sharedPrefs = context.getSharedPreferences(
-                    PREF_UNIQUE_ID, Context.MODE_PRIVATE);
-            uniqueID = sharedPrefs.getString(PREF_UNIQUE_ID, null);
-
-            if (uniqueID == null) {
-                uniqueID = UUID.randomUUID().toString();
-                SharedPreferences.Editor editor = sharedPrefs.edit();
-                editor.putString(PREF_UNIQUE_ID, uniqueID);
-                editor.commit();
-            }
-        }
-
-        return uniqueID;
-    }
-
-
-
     @Override
-    public void onDestroy(){
+    public void onDestroy() {
         super.onDestroy();
         scannerView.stopCamera();
-
-
-
-
     }
 
 
@@ -140,9 +90,6 @@ public class BarcodeActivity extends AppCompatActivity implements ZXingScannerVi
     public void onPause() {
         super.onPause();
         scannerView.stopCamera();           // Stop camera on pause
-
-
-
     }
 
     @Override
@@ -152,48 +99,27 @@ public class BarcodeActivity extends AppCompatActivity implements ZXingScannerVi
         barcode = result.getText();
         inDb = false;
 
-        System.out.println("***************************");
-        System.out.println("***************************");
-        System.out.println(scanResult);
-        // **************
-
-
         StringRequest stringRequest = new StringRequest(Request.Method.POST,
                 Constants.URL_CHECKIFUSEDBARCODE,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                    System.out.println("***************************");
-                        System.out.println("***************************");
-                        System.out.println(response);
                         try {
-
                             JSONObject jsonObject = new JSONObject(response);
                             String temp = jsonObject.getString("exist");
-                            if (temp.contains("true")) inDb=true;
-
-                            if (inDb){
-                                Intent intent = new Intent(BarcodeActivity.this,ResultActivity.class);
-
+                            if (temp.contains("true")) inDb = true;
+                            if (inDb) {
+                                Intent intent = new Intent(BarcodeActivity.this, ResultActivity.class);
                                 finish();
                                 startActivity(intent);
-                                //finish();
-                                System.out.println(barcode);
                             } else if (!inDb) {
-                                Intent intent = new Intent(BarcodeActivity.this,MainActivity.class);
-
+                                Intent intent = new Intent(BarcodeActivity.this, MainActivity.class);
                                 finish();
                                 startActivity(intent);
-
                             }
-
-
-
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
-
                     }
                 },
                 new Response.ErrorListener() {
@@ -201,28 +127,19 @@ public class BarcodeActivity extends AppCompatActivity implements ZXingScannerVi
                     public void onErrorResponse(VolleyError error) {
 
                     }
-                }){
-            protected Map<String,String> getParams () throws AuthFailureError {
-                Map<String,String> params = new HashMap<>();
+                }) {
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
                 params.put("barcode", barcode);
                 return params;
             }
         };
 
         RequestHandler.getInstance(this).addToRequestQueue(stringRequest);
-
-
-
-
-
     }
-
 
     @Override
     protected void onStop() {
         super.onStop();
-
-
-
     }
 }

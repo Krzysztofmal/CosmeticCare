@@ -8,22 +8,23 @@ import java.util.ArrayList;
 
 public class Product {
 
-    private Integer id_product;
+    private Integer idProduct;
     private String barcode;
 
-    public Product(Integer id_product, String barcode) {
-        this.id_product = id_product;
+    public Product(Integer idProduct, String barcode) {
+        this.idProduct = idProduct;
         this.barcode = barcode;
     }
 
-    public Product(){}
-
-    public Integer getId_product() {
-        return id_product;
+    public Product() {
     }
 
-    public void setId_product(Integer id_product) {
-        this.id_product = id_product;
+    public Integer getIdProduct() {
+        return idProduct;
+    }
+
+    public void setIdProduct(Integer idProduct) {
+        this.idProduct = idProduct;
     }
 
     public String getBarcode() {
@@ -41,7 +42,7 @@ public class Product {
         Product b = new Product();
         // Deserialize json into object fields
         try {
-            b.setId_product(jsonObject.getInt("id_product"));
+            b.setIdProduct(jsonObject.getInt("id_product"));
             b.setBarcode(jsonObject.getString("barcode"));
 
         } catch (JSONException e) {
@@ -59,7 +60,7 @@ public class Product {
         JSONObject productsJson;
         ArrayList<Product> products = new ArrayList<Product>(jsonArray.length());
         // Process each result in json array, decode and convert to business object
-        for (int i=0; i < jsonArray.length(); i++) {
+        for (int i = 0; i < jsonArray.length(); i++) {
             try {
                 productsJson = jsonArray.getJSONObject(i);
             } catch (Exception e) {
@@ -75,8 +76,6 @@ public class Product {
 
         return products;
     }
-
-
 
 
 }

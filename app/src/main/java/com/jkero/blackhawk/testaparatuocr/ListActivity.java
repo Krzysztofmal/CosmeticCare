@@ -29,7 +29,7 @@ public class ListActivity extends AppCompatActivity implements AdapterView.OnIte
 
     TypedArray emoticons;
     TypedArray stars;
-    List <Ingredient> ingredientsListH;
+    List<Ingredient> ingredientsListH;
 
     private ListView ingredientsList;
     List<RowIngredient> rowItems;
@@ -45,15 +45,12 @@ public class ListActivity extends AppCompatActivity implements AdapterView.OnIte
         db = new DbHandler(this);
         final Cursor datas = db.getData();
         datasList = new ArrayList<Integer>();
-        while (datas.moveToNext()){
+        while (datas.moveToNext()) {
             datasList.add(datas.getInt(0));
         }
 
 
-
-
         //mInterstitialAd.show();
-
 
 
         super.onCreate(savedInstanceState);
@@ -70,57 +67,41 @@ public class ListActivity extends AppCompatActivity implements AdapterView.OnIte
         ingredientsList = (ListView) findViewById(R.id.lvIngredients);
 
 
-
-        System.out.println("************************");
         StringRequest stringRequest = new StringRequest(Request.Method.POST,
                 Constants.URL_GETALLINGREDIENTS,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        System.out.println("************************xxx");
+
                         try {
                             JSONArray jsonArray = new JSONArray(response);
 
-                            for (Ingredient i : Ingredient.fromJsonList(jsonArray)){
+                            for (Ingredient i : Ingredient.fromJsonList(jsonArray)) {
 
 
+                                if (!datasList.isEmpty()) {
 
-                               if (!datasList.isEmpty()){
+                                    if (datasList.contains(i.getIdIngredient())) {
+                                        rowItems.add(0, new RowIngredient(i.getNameIngredient(), i.getDescription(), emoticons.getResourceId(i.getDanger(), 0), stars.getResourceId(1, 0), i.getIdIngredient()));
+                                    } else {
+                                        if (rowItems.size() == 0) {
+                                            rowItems.add(0, new RowIngredient(i.getNameIngredient(), i.getDescription(), emoticons.getResourceId(i.getDanger(), 0), stars.getResourceId(0, 0), i.getIdIngredient()));
+                                        } else if (rowItems.size() == 1) {
+                                            rowItems.add(1, new RowIngredient(i.getNameIngredient(), i.getDescription(), emoticons.getResourceId(i.getDanger(), 0), stars.getResourceId(0, 0), i.getIdIngredient()));
 
-                                if(datasList.contains(i.getId_ingredient())) {
-                                    rowItems.add(0, new RowIngredient(i.getName_ingredient(), i.getDescription(), emoticons.getResourceId(i.getDanger(), 0), stars.getResourceId(1, 0), i.getId_ingredient()));
-                                } else {
-                                    if (rowItems.size()==0) {
-                                        rowItems.add(0,new RowIngredient(i.getName_ingredient(), i.getDescription(), emoticons.getResourceId(i.getDanger(), 0), stars.getResourceId(0, 0), i.getId_ingredient()));
-                                    } else if (rowItems.size()==1) {
-                                        rowItems.add(1,new RowIngredient(i.getName_ingredient(), i.getDescription(), emoticons.getResourceId(i.getDanger(), 0), stars.getResourceId(0, 0), i.getId_ingredient()));
-
-                                    } else if (rowItems.size()>1){
-                                        rowItems.add(rowItems.size() - 1, new RowIngredient(i.getName_ingredient(), i.getDescription(), emoticons.getResourceId(i.getDanger(), 0), stars.getResourceId(0, 0), i.getId_ingredient()));
+                                        } else if (rowItems.size() > 1) {
+                                            rowItems.add(rowItems.size() - 1, new RowIngredient(i.getNameIngredient(), i.getDescription(), emoticons.getResourceId(i.getDanger(), 0), stars.getResourceId(0, 0), i.getIdIngredient()));
+                                        }
                                     }
+                                } else {
+                                    rowItems.add(new RowIngredient(i.getNameIngredient(), i.getDescription(), emoticons.getResourceId(i.getDanger(), 0), stars.getResourceId(0, 0), i.getIdIngredient()));
+
                                 }
-                            } else {
-    rowItems.add(new RowIngredient(i.getName_ingredient(), i.getDescription(), emoticons.getResourceId(i.getDanger(), 0), stars.getResourceId(0, 0), i.getId_ingredient()));
-
-}
-
-
-
-
-
-
 
 
                             }
-                            CustomAdapter adapter = new CustomAdapter(getApplicationContext(),rowItems);
+                            CustomAdapter adapter = new CustomAdapter(getApplicationContext(), rowItems);
                             ingredientsList.setAdapter(adapter);
-
-
-
-
-
-
-
 
 
                         } catch (JSONException e) {
@@ -131,17 +112,13 @@ public class ListActivity extends AppCompatActivity implements AdapterView.OnIte
                     }
                 },
                 new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
 
-            }
-        });
+                    }
+                });
 
         RequestHandler.getInstance(this).addToRequestQueue(stringRequest);
-
-
-
-
 
 
         ingredientsList.setOnItemClickListener(this);
@@ -153,21 +130,21 @@ public class ListActivity extends AppCompatActivity implements AdapterView.OnIte
                                            int pos, long id) {
 
                 boolean add = true;
-                if (datasList.contains(rowItems.get(pos).getId())){
+                if (datasList.contains(rowItems.get(pos).getId())) {
 
-                        db.deleteIngredient(rowItems.get(pos).getId());
+                    db.deleteIngredient(rowItems.get(pos).getId());
 
-                        add = false;
+                    add = false;
 
-                        Intent intent = new Intent(ListActivity.this,ListActivity.class);
-                        finish();
-                        startActivity(intent);
+                    Intent intent = new Intent(ListActivity.this, ListActivity.class);
+                    finish();
+                    startActivity(intent);
                 }
 
-                if (add){
+                if (add) {
                     db.addIngredient(rowItems.get(pos).getId());
 
-                    Intent intent = new Intent(ListActivity.this,ListActivity.class);
+                    Intent intent = new Intent(ListActivity.this, ListActivity.class);
                     finish();
                     startActivity(intent);
                 }
@@ -177,16 +154,7 @@ public class ListActivity extends AppCompatActivity implements AdapterView.OnIte
         });
 
 
-
-
-
-
-
-
-
     }
-
-
 
 
     @Override
@@ -216,11 +184,7 @@ public class ListActivity extends AppCompatActivity implements AdapterView.OnIte
         alert.show();
 
 
-
     }
-
-
-
 
 
 }

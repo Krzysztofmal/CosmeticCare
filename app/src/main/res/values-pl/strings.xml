@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Cosmetic Care INCI Skaner</string>
-    <string name="about_app1" translatable="false">Aplikacja w swojej bazie zawiera składniki, na które powinniśmy zwrócić uwagę. Te, które nie mają szkodliwego działania na nasz organizm, nie zostały ujęte. Natomiast te, które wywołują alergię lub są szkodliwe, zostały podzielone na 3 kategorie :</string>
-    <string name="about_app2" translatable="false">Znikoma szkodliwość, ilość nie powoduje skutków ubocznych lub nie wyowłuje żadnych negatywnych reakcji organizmu</string>
-    <string name="about_app3" translatable="false">Należy zwrócić uwagę na ten składnik, ponieważ potencjalnie może być dla nas szkodliwy</string>
-    <string name="about_app4" translatable="false">Najepiej unikać tego składnika, ponieważ jest on szkodliwy i ma negatywne działanie na nasz organizm</string>
-    <string name="about_app5" translatable="false">Aby rozpocząć sprawdzanie produktu, należy kliknąć \"Rozpocznij skanowanie\" i zeskanować kod kreskowy produktu. Następnie otrzymamy odpowiedź zwrotną od aplikacji(wynik lub zostaniemy poproszeni o zeskanowanie składników produktu, gdyż produkt nie znajduje się w bazie). Z menu głównego możemy przejść do \"listy składników\", gdzie możemy zaznaczyć składniki(poprzez dłuższe przytrzymanie palca), które chcemy wyświetlać na początku listy wyników. Ponadto przez kliknięcie w każdy składnik, mamy możliwość podglądu krótkiego opisu. UWAGA! Podczas skanowania składników, należy zadbać o jak najlepsze oświetlenie, cienie lub błyszczące opakowania mogą zakłócić wyniki. Jakość kamery tylnej również ma wpływ na rezultat.</string>
-    <string name="ingredients_title" translatable="false">Lista składników: \n</string>
-    <string name="menu_about" translatable="false">O aplikacji</string>
-    <string name="menu_exit" translatable="false">Wyjście</string>
-    <string name="menu_list" translatable="false">Lista\nskładników</string>
-    <string name="menu_start" translatable="false">Rozpocznij\nskanowanie</string>
-    <string name="menu_title" translatable="false">Menu</string>
-    <string name="scan_already_scanned" translatable="false">Składniki tego produktu zostały już zeskanowane przez to urządzenie. Klikinij OK aby zobaczyć listę i oczekuj na dodanie oficjalnej etykiety. </string>
-    <string name="scan_complete" translatable="false">Skanowanie zakończone! \n</string>
-    <string name="scan_dialog_info" translatable="false">Brak składników dla tego produktu w bazie. Prosze umieścić etykietę ze składnikami produktu przed obiektywem aparatu i przez 15 sekund obracać tak, by ułatwić odczyt etykiety (Ingredients:). Pamiętaj również o oświetleniu, które wpływa na jakość odczytu.</string>
-    <string name="scan_dialog_title" translatable="false">Skanowanie składników</string>
-    <string name="scan_done" translatable="false">Twój skan został przesłany do analizy! Wkrótce zostanie utworzona etykieta dla tego produktu.</string>
-    <string name="scan_quality" translatable="false">Prawdopodobnie Twój skan jest nieczytelny.</string>
-    <string name="scan_result_finish" translatable="false">Skanowanie zakończone!</string>
-    <string name="scan_result_title" translatable="false">Dziękujemy za zeskanowanie składników produktu!\nWkrótce zostanie stworzona odpowiednia etykieta dla produktu.\n</string>
-    <string name="scan_title" translatable="false">Zeskanowany kod: \n</string>
-    <string name="title_activity_list" translatable="false">ListActivity</string>
-    <string name="title_activity_result" translatable="false">ResultActivity</string>
-    <string name="set_language" translatable="false">.php</string>
+    <string name="about_app1" translatable="true">Aplikacja w swojej bazie zawiera składniki, na które powinniśmy zwrócić uwagę. Te, które nie mają szkodliwego działania na nasz organizm, nie zostały ujęte. Natomiast te, które wywołują alergię lub są szkodliwe, zostały podzielone na 3 kategorie :</string>
+    <string name="about_app2" translatable="true">Znikoma szkodliwość, ilość nie powoduje skutków ubocznych lub nie wyowłuje żadnych negatywnych reakcji organizmu</string>
+    <string name="about_app3" translatable="true">Należy zwrócić uwagę na ten składnik, ponieważ potencjalnie może być dla nas szkodliwy</string>
+    <string name="about_app4" translatable="true">Najepiej unikać tego składnika, ponieważ jest on szkodliwy i ma negatywne działanie na nasz organizm</string>
+    <string name="about_app5" translatable="true">Aby rozpocząć sprawdzanie produktu, należy kliknąć \"Rozpocznij skanowanie\" i zeskanować kod kreskowy produktu. Następnie otrzymamy odpowiedź zwrotną od aplikacji(wynik lub zostaniemy poproszeni o zeskanowanie składników produktu, gdyż produkt nie znajduje się w bazie). Z menu głównego możemy przejść do \"listy składników\", gdzie możemy zaznaczyć składniki(poprzez dłuższe przytrzymanie palca), które chcemy wyświetlać na początku listy wyników. Ponadto przez kliknięcie w każdy składnik, mamy możliwość podglądu krótkiego opisu. UWAGA! Podczas skanowania składników, należy zadbać o jak najlepsze oświetlenie, cienie lub błyszczące opakowania mogą zakłócić wyniki. Jakość kamery tylnej również ma wpływ na rezultat.</string>
+    <string name="ingredients_title" translatable="true">Lista składników: \n</string>
+    <string name="menu_about" translatable="true">O aplikacji</string>
+    <string name="menu_exit" translatable="true">Wyjście</string>
+    <string name="menu_list" translatable="true">Lista\nskładników</string>
+    <string name="menu_start" translatable="true">Rozpocznij\nskanowanie</string>
+    <string name="menu_title" translatable="true">Menu</string>
+    <string name="scan_already_scanned" translatable="true">Składniki tego produktu zostały już zeskanowane przez to urządzenie. Klikinij OK aby zobaczyć listę i oczekuj na dodanie oficjalnej etykiety. </string>
+    <string name="scan_complete" translatable="true">Skanowanie zakończone! \n</string>
+    <string name="scan_dialog_info" translatable="true">Brak składników dla tego produktu w bazie. Prosze umieścić etykietę ze składnikami produktu przed obiektywem aparatu i przez 15 sekund obracać tak, by ułatwić odczyt etykiety (Ingredients:). Pamiętaj również o oświetleniu, które wpływa na jakość odczytu.</string>
+    <string name="scan_dialog_title" translatable="true">Skanowanie składników</string>
+    <string name="scan_done" translatable="true">Twój skan został przesłany do analizy! Wkrótce zostanie utworzona etykieta dla tego produktu.</string>
+    <string name="scan_quality" translatable="true">Prawdopodobnie Twój skan jest nieczytelny.</string>
+    <string name="scan_result_finish" translatable="true">Skanowanie zakończone!</string>
+    <string name="scan_result_title" translatable="true">Dziękujemy za zeskanowanie składników produktu!\nWkrótce zostanie stworzona odpowiednia etykieta dla produktu.\n</string>
+    <string name="scan_title" translatable="true">Zeskanowany kod: \n</string>
+    <string name="title_activity_list" translatable="true">ListActivity</string>
+    <string name="title_activity_result" translatable="true">ResultActivity</string>
+    <string name="set_language" translatable="true">.php</string>
 </resources>

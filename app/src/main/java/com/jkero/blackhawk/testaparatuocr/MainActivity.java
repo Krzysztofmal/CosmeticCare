@@ -63,15 +63,12 @@ public class MainActivity extends AppCompatActivity {
 
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int [] grantResults){
-        switch (requestCode)
-        {
-            case RequestCameraPermissionID:
-            {
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
-                {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case RequestCameraPermissionID: {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                            return;
+                        return;
                     }
                     try {
                         cameraSource.start(cameraView.getHolder());
@@ -86,14 +83,10 @@ public class MainActivity extends AppCompatActivity {
 
 //**
 
-    public static boolean hasPermissions(Context context, String... permissions)
-    {
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context != null && permissions != null)
-        {
-            for (String permission : permissions)
-            {
-                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED)
-                {
+    public static boolean hasPermissions(Context context, String... permissions) {
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context != null && permissions != null) {
+            for (String permission : permissions) {
+                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
                     return false;
                 }
             }
@@ -102,7 +95,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 //**
-
 
 
     private static String uniqueID = null;
@@ -126,12 +118,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-AlertDialog alert;
+    AlertDialog alert;
 
-boolean scanDone;
-boolean startScanning;
-
-
+    boolean scanDone;
+    boolean startScanning;
 
 
     @Override
@@ -139,11 +129,10 @@ boolean startScanning;
         super.onCreate(savedInstanceState);
 
         idIngredients = "";
-        deviceId ="";
+        deviceId = "";
 
         scanDone = false;
         startScanning = true;
-
 
 
         //addon
@@ -161,14 +150,12 @@ boolean startScanning;
                             if (temp.contains("true")) {
 
                                 finish();
-                                mess="scanned by this device";
-
+                                mess = "scanned by this device";
 
 
                             } else {
                                 mess = null;
                             }
-
 
 
                         } catch (JSONException e) {
@@ -183,9 +170,9 @@ boolean startScanning;
                     public void onErrorResponse(VolleyError error) {
 
                     }
-                }){
-            protected Map<String,String> getParams () throws AuthFailureError {
-                Map<String,String> params = new HashMap<>();
+                }) {
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
                 params.put("barcode", BarcodeActivity.barcode);
                 params.put("device_id", id(getApplicationContext()));
                 return params;
@@ -193,14 +180,6 @@ boolean startScanning;
         };
 
         RequestHandler.getInstance(this).addToRequestQueue(stringRequestw);
-
-
-
-
-
-
-
-
 
 
         deviceId = id(getApplicationContext()).toString();
@@ -227,10 +206,7 @@ boolean startScanning;
         }
 
 
-
         //getting datas from db, list of ingredients with ID's
-
-
 
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST,
@@ -244,7 +220,7 @@ boolean startScanning;
                             //JSONObject jsonObject = new JSONObject(response);
                             JSONArray jsonArray = new JSONArray(response);
 
-                            for (Ingredient ingr : Ingredient.fromJsonList(jsonArray)){
+                            for (Ingredient ingr : Ingredient.fromJsonList(jsonArray)) {
                                 ingredientsList.add(ingr);
                             }
 
@@ -265,10 +241,7 @@ boolean startScanning;
         RequestHandler.getInstance(this).addToRequestQueue(stringRequest);
 
 
-
         //finish
-
-
 
 
         TextRecognizer textRecognizer = new TextRecognizer.Builder(getApplicationContext()).build();
@@ -279,7 +252,7 @@ boolean startScanning;
             //preview size
             cameraSource = new CameraSource.Builder(getApplicationContext(), textRecognizer)
                     .setFacing(CameraSource.CAMERA_FACING_BACK)
-                    .setRequestedPreviewSize(1920,1080)
+                    .setRequestedPreviewSize(1920, 1080)
                     .setRequestedFps(60.0f)
                     .setAutoFocusEnabled(true)
                     .build();
@@ -290,10 +263,10 @@ boolean startScanning;
                     try {
 
                         if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                           ActivityCompat.requestPermissions(MainActivity.this,
-                                   new String[]{Manifest.permission.CAMERA},
-                                   RequestCameraPermissionID);
-                             return;
+                            ActivityCompat.requestPermissions(MainActivity.this,
+                                    new String[]{Manifest.permission.CAMERA},
+                                    RequestCameraPermissionID);
+                            return;
                         }
                         cameraSource.start(cameraView.getHolder());
                     } catch (IOException e) {
@@ -324,46 +297,36 @@ boolean startScanning;
                 public void receiveDetections(Detector.Detections<TextBlock> detections) {
 
                     final SparseArray<TextBlock> items = detections.getDetectedItems();
-                    if (items.size() != 0)
-                    {
+                    if (items.size() != 0) {
                         textView.post(new Runnable() {
                             @Override
                             public void run() {
 
 
+                                String[] stringList;
 
-                                System.out.println("ITEMS : ");
-                                System.out.println();
-                                String [] stringList;
-
-                                for (int i=0;i<items.size();++i)
-                                {
+                                for (int i = 0; i < items.size(); ++i) {
 
 
                                     TextBlock item = items.valueAt(i);
 
-                                    System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-                                    System.out.println(item.getValue());
-                                    System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-
 
                                     stringList = item.getValue()
-                                            .replace(" ","")
-                                            .replace(":",",")
+                                            .replace(" ", "")
+                                            .replace(":", ",")
                                             //.replace("•",",")
-                                            .replace(".","")
+                                            .replace(".", "")
                                             .toLowerCase()
                                             .split(",");
 
-                                    System.out.println("\n \n PORÓWNUJĘ \n \n");
 
                                     //solution 1
 
 
-                                    for (Ingredient ing : ingredientsList){
+                                    for (Ingredient ing : ingredientsList) {
 
-                                        if (item.getValue().toLowerCase().contains(ing.getName_ingredient().toLowerCase())) {
-                                            if (startScanning){
+                                        if (item.getValue().toLowerCase().contains(ing.getNameIngredient().toLowerCase())) {
+                                            if (startScanning) {
                                                 final Handler handler = new Handler();
                                                 handler.postDelayed(new Runnable() {
                                                     @Override
@@ -372,20 +335,19 @@ boolean startScanning;
                                                         scanDone = true;
                                                     }
                                                 }, 15000);
-                                                startScanning=false;
+                                                startScanning = false;
                                             }
 
 
-
                                             //rozpoznanie zawiera nazwę składnika z bazy to
-                                            if (!stringBuilder.toString().contains(ing.getName_ingredient())) {
-                                                stringBuilder.append(ing.getName_ingredient());
+                                            if (!stringBuilder.toString().contains(ing.getNameIngredient())) {
+                                                stringBuilder.append(ing.getNameIngredient());
                                                 stringBuilder.append("\n");
                                                 //dodanie do stringów id produktu
                                                 if (idIngredients.isEmpty()) {
-                                                    idIngredients += ing.getId_ingredient();
+                                                    idIngredients += ing.getIdIngredient();
                                                 } else {
-                                                    idIngredients += "," + ing.getId_ingredient();
+                                                    idIngredients += "," + ing.getIdIngredient();
                                                 }
                                             }
                                         }
@@ -427,12 +389,6 @@ boolean startScanning;
         }
 
 
-
-
-
-
-
-
     }
 
     public void exit(View view) {
@@ -449,7 +405,6 @@ boolean startScanning;
 
     @Override
     protected void onPause() {
-        System.out.println("pause");
 
 
         super.onPause();
@@ -457,7 +412,6 @@ boolean startScanning;
 
     @Override
     protected void onStop() {
-        System.out.println("stop");
         super.onStop();
     }
 
@@ -465,12 +419,11 @@ boolean startScanning;
     protected void onDestroy() {
 
 
-
-        if (idIngredients.length()<1 && scanDone==true){
+        if (idIngredients.length() < 1 && scanDone == true) {
             Intent intent = new Intent(MainActivity.this, ScanResultActivity.class);
             startActivity(intent);
             mess = "1";
-        }else {
+        } else {
 
             StringRequest stringRequest = new StringRequest(Request.Method.POST,
                     Constants.URL_DOSCAN,
@@ -521,18 +474,16 @@ boolean startScanning;
         alert.dismiss();
 
 
-
         super.onDestroy();
     }
 
     @Override
     protected void onStart() {
-        System.out.println("start");
         super.onStart();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(getString(R.string.scan_dialog_title));
-        builder.setPositiveButton("OK",new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -553,14 +504,11 @@ boolean startScanning;
         alert.show();
 
 
-
-
-
     }
 
     @Override
     protected void onResume() {
-        System.out.println("resume");
+
         super.onResume();
     }
 }
