@@ -1,11 +1,13 @@
 package com.jkero.blackhawk.testaparatuocr;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.database.Cursor;
 //import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -22,16 +24,22 @@ import org.json.JSONException;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-public class ListActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class ListActivity extends AppCompatActivity {
 
 
     TypedArray emoticons;
     TypedArray stars;
     List<Ingredient> ingredientsListH;
 
-    private ListView ingredientsList;
+    //private ListView ingredientsList;
+    private RecyclerView ingredientsList;
     List<RowIngredient> rowItems;
 
 
@@ -39,8 +47,10 @@ public class ListActivity extends AppCompatActivity implements AdapterView.OnIte
     DbHandler db;
     ArrayList<Integer> datasList;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
 
         db = new DbHandler(this);
         final Cursor datas = db.getData();
@@ -64,7 +74,10 @@ public class ListActivity extends AppCompatActivity implements AdapterView.OnIte
         rowItems = new ArrayList<RowIngredient>();
         rowItems.clear();
 
-        ingredientsList = (ListView) findViewById(R.id.lvIngredients);
+        //ingredientsList = (ListView) findViewById(R.id.lvIngredients);
+        ingredientsList = (RecyclerView) findViewById(R.id.lvIngredients);
+
+        ingredientsList.addItemDecoration(new DividerItemDecoration(ListActivity.this, LinearLayoutManager.VERTICAL));
 
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST,
@@ -100,8 +113,11 @@ public class ListActivity extends AppCompatActivity implements AdapterView.OnIte
 
 
                             }
-                            CustomAdapter adapter = new CustomAdapter(getApplicationContext(), rowItems);
+                            CustomAdapter adapter = new CustomAdapter(ListActivity.this, rowItems);
+                            adapter.notifyDataSetChanged();
                             ingredientsList.setAdapter(adapter);
+                            //ingredientsList.setAdapter(new CustomAdapter(getApplicationContext(), rowItems));
+                            ingredientsList.setLayoutManager(new LinearLayoutManager(ListActivity.this));
 
 
                         } catch (JSONException e) {
@@ -121,6 +137,8 @@ public class ListActivity extends AppCompatActivity implements AdapterView.OnIte
         RequestHandler.getInstance(this).addToRequestQueue(stringRequest);
 
 
+
+/*
         ingredientsList.setOnItemClickListener(this);
 
 
@@ -151,38 +169,20 @@ public class ListActivity extends AppCompatActivity implements AdapterView.OnIte
 
                 return true;
             }
-        });
+        });*/
 
 
     }
 
-
     @Override
     protected void onStart() {
         super.onStart();
-
 
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position,
-                            long id) {
-
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(rowItems.get(position).getIngredientName());
-
-        builder.setMessage(rowItems.get(position).getIngredientDesc());
-        AlertDialog alert = builder.create();
-
-        alert.show();
-
 
     }
 

@@ -2,6 +2,7 @@ package com.jkero.blackhawk.testaparatuocr;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -9,6 +10,7 @@ import android.content.pm.PackageManager;
 //import android.support.v4.app.ActivityCompat;
 //import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 
 
 import com.android.volley.AuthFailureError;
@@ -27,6 +29,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
@@ -40,6 +43,7 @@ public class BarcodeActivity extends AppCompatActivity implements ZXingScannerVi
 
     final int RequestCameraPermissionID = 1001;
 
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
@@ -49,10 +53,29 @@ public class BarcodeActivity extends AppCompatActivity implements ZXingScannerVi
                         return;
                     }
 
-                }
+                }  else {
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setTitle(R.string.alert_permission_title);
+                    builder.setMessage(R.string.alert_permission_description);
+                    builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    });
+
+
+
+                    builder.show();
+            }
             }
         }
     }
+
+
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,12 +87,20 @@ public class BarcodeActivity extends AppCompatActivity implements ZXingScannerVi
 
         inDb = false;
 
+
         if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(BarcodeActivity.this,
                     new String[]{Manifest.permission.CAMERA},
                     RequestCameraPermissionID);
             return;
         }
+
+
+
+
+
+
+
     }
 
     @Override

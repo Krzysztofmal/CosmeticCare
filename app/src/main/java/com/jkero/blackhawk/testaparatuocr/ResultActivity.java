@@ -31,11 +31,14 @@ import java.util.List;
 import java.util.Map;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-public class ResultActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class ResultActivity extends AppCompatActivity {
 
     TextView textView;
-    ListView lvIngredients;
+    RecyclerView lvIngredients;
 
     List<RowIngredient> rowItems;
 
@@ -83,7 +86,8 @@ public class ResultActivity extends AppCompatActivity implements AdapterView.OnI
 
         rowItems = new ArrayList<RowIngredient>();
 
-        lvIngredients = (ListView) findViewById(R.id.lvIngredients);
+        lvIngredients = (RecyclerView) findViewById(R.id.lvIngredients);
+        lvIngredients.addItemDecoration(new DividerItemDecoration(ResultActivity.this, LinearLayoutManager.VERTICAL));
         textView = (TextView) findViewById(R.id.tvBarcode);
         textView.append(" " + BarcodeActivity.barcode);
 
@@ -125,8 +129,10 @@ public class ResultActivity extends AppCompatActivity implements AdapterView.OnI
 
 
                             }
-                            CustomAdapter adapter = new CustomAdapter(getApplicationContext(), rowItems);
-                            lvIngredients.setAdapter(adapter);
+                            //CustomAdapter adapter = new CustomAdapter(getApplicationContext(), rowItems);
+                            //lvIngredients.setAdapter(adapter);
+                            lvIngredients.setAdapter(new CustomAdapter(ResultActivity.this, rowItems));
+                            lvIngredients.setLayoutManager(new LinearLayoutManager(ResultActivity.this));
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -151,12 +157,12 @@ public class ResultActivity extends AppCompatActivity implements AdapterView.OnI
         RequestHandler.getInstance(this).addToRequestQueue(stringRequest);
 
 
-        lvIngredients.setOnItemClickListener(this);
+        //lvIngredients.setOnItemClickListener(this);
 
 
     }
 
-
+/*
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position,
                             long id) {
@@ -172,6 +178,6 @@ public class ResultActivity extends AppCompatActivity implements AdapterView.OnI
 
 
     }
-
+*/
 
 }

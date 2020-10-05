@@ -26,6 +26,13 @@
     <string name="scan_quality" translatable="true">The scan is probably unreadable. Try again.</string>
     <string name="set_language" translatable="true">en.php</string>
 
+    <string name="dialog_title_database" translatable="true">Adding ingredient to favourites</string>
+    <string name="dialog_added_database" translatable="true">Ingredient has been added to your favourites list.</string>
+    <string name="dialog_removed_database" translatable="true">Ingredient has been deleted from your favourites list.</string>
+
+    <string name="alert_permission_title" translatable="true">Functionality limited</string>
+    <string name="alert_permission_description" translatable="true">Application operation limited. To use this option, grant the app permissions.</string>
+
 
 
 

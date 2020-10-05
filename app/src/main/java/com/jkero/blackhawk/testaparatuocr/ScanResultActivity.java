@@ -31,11 +31,14 @@ import java.util.List;
 import java.util.Map;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class ScanResultActivity extends AppCompatActivity {
 
 
-    ListView listviewIngredients;
+    RecyclerView listviewIngredients;
     TextView textviewTitle;
     String temp;
 
@@ -94,7 +97,8 @@ public class ScanResultActivity extends AppCompatActivity {
         rowItems.clear();
 
 
-        listviewIngredients = (ListView) findViewById(R.id.listviewIngredients);
+        listviewIngredients = (RecyclerView) findViewById(R.id.listviewIngredients);
+        listviewIngredients.addItemDecoration(new DividerItemDecoration(ScanResultActivity.this, LinearLayoutManager.VERTICAL));
         textviewTitle = (TextView) findViewById(R.id.textviewTitle);
 
         textviewTitle.append(getString(R.string.scan_result_title));
@@ -145,9 +149,10 @@ public class ScanResultActivity extends AppCompatActivity {
                                                 }
 
                                             }
-                                            CustomAdapter adapter = new CustomAdapter(getApplicationContext(), rowItems);
+                                            CustomAdapter adapter = new CustomAdapter(ScanResultActivity.this, rowItems);
                                             listviewIngredients.setAdapter(adapter);
-
+                                            listviewIngredients.setLayoutManager(new LinearLayoutManager(ScanResultActivity.this));
+/*
                                             listviewIngredients.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                                 @Override
                                                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -160,7 +165,7 @@ public class ScanResultActivity extends AppCompatActivity {
 
                                                     alert2.show();
                                                 }
-                                            });
+                                            });*/
 
 
                                         } catch (JSONException e) {
@@ -234,9 +239,10 @@ public class ScanResultActivity extends AppCompatActivity {
                                                 }
 
                                             }
-                                            CustomAdapter adapter = new CustomAdapter(getApplicationContext(), rowItems);
+                                            CustomAdapter adapter = new CustomAdapter(ScanResultActivity.this, rowItems);
                                             listviewIngredients.setAdapter(adapter);
-
+                                            listviewIngredients.setLayoutManager(new LinearLayoutManager(ScanResultActivity.this));
+/*
                                             listviewIngredients.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                                 @Override
                                                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -249,7 +255,7 @@ public class ScanResultActivity extends AppCompatActivity {
 
                                                     alert2.show();
                                                 }
-                                            });
+                                            });*/
 
 
                                         } catch (JSONException e) {

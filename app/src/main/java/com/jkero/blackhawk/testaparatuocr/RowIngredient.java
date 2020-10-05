@@ -1,5 +1,7 @@
 package com.jkero.blackhawk.testaparatuocr;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 public class RowIngredient {
 
 

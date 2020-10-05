@@ -24,4 +24,9 @@
     <string name="title_activity_list" translatable="true">ListActivity</string>
     <string name="title_activity_result" translatable="true">ResultActivity</string>
     <string name="set_language" translatable="true">.php</string>
+    <string name="dialog_title_database" translatable="true">Dodawanie składnika do ulubionych</string>
+    <string name="dialog_added_database" translatable="true">Składnk został dodany do twojej listy.</string>
+    <string name="dialog_removed_database" translatable="true">Składnik został usunięty z twojej listy.</string>
+    <string name="alert_permission_title" translatable="true">Funkcjonalność ograniczona</string>
+    <string name="alert_permission_description" translatable="true">Działanie aplikacji jest aktualnie ograniczone. Aby skorzystać z możliwości skanowania, przyznaj aplikacji uprawnienia.</string>
 </resources>
