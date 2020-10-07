@@ -20,7 +20,7 @@
         android:supportsRtl="true"
         android:networkSecurityConfig="@xml/network_security_config"
         android:theme="@style/AppTheme">
-        <activity android:name="com.jkero.blackhawk.testaparatuocr.MenuActivity"
+        <activity android:name="com.jkero.blackhawk.testaparatuocr.activities.MenuActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -37,15 +37,15 @@
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-8457083331420228~3984558764"/>
 
-        <activity android:name="com.jkero.blackhawk.testaparatuocr.MainActivity"
+        <activity android:name="com.jkero.blackhawk.testaparatuocr.activities.MainActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name="com.jkero.blackhawk.testaparatuocr.BarcodeActivity"
+        <activity android:name="com.jkero.blackhawk.testaparatuocr.activities.BarcodeActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name="com.jkero.blackhawk.testaparatuocr.ResultActivity"
+        <activity android:name="com.jkero.blackhawk.testaparatuocr.activities.ResultActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name="com.jkero.blackhawk.testaparatuocr.ListActivity"
+        <activity android:name="com.jkero.blackhawk.testaparatuocr.activities.ListActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name="com.jkero.blackhawk.testaparatuocr.ScanResultActivity"
+        <activity android:name="com.jkero.blackhawk.testaparatuocr.activities.ScanResultActivity"
             android:screenOrientation="portrait"></activity>
 
         <uses-library

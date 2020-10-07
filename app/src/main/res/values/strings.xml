@@ -24,7 +24,7 @@
     <string name="scan_already_scanned" translatable="true">The ingredients of this product have already been scanned by this device. Click OK to view the list and wait for official label. </string>
     <string name="scan_done" translatable="true">Your scan has been submitted for analysis! A label will be created for this product soon.</string>
     <string name="scan_quality" translatable="true">The scan is probably unreadable. Try again.</string>
-    <string name="set_language" translatable="true">en.php</string>
+    <string name="set_language" translatable="true">en/</string>
 
     <string name="dialog_title_database" translatable="true">Adding ingredient to favourites</string>
     <string name="dialog_added_database" translatable="true">Ingredient has been added to your favourites list.</string>

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/bg"
-    tools:context="com.jkero.blackhawk.testaparatuocr.MenuActivity"
+    tools:context="com.jkero.blackhawk.testaparatuocr.activities.MenuActivity"
 
     android:weightSum="10"
     tools:layout_editor_absoluteY="25dp">

@@ -1,47 +1,40 @@
-package com.jkero.blackhawk.testaparatuocr;
+package com.jkero.blackhawk.testaparatuocr.activities;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 //import android.support.annotation.NonNull;
 //import android.support.v4.app.ActivityCompat;
 //import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
 
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.google.zxing.Result;
+import com.jkero.blackhawk.testaparatuocr.R;
+import com.jkero.blackhawk.testaparatuocr.api.ApiClient;
+import com.jkero.blackhawk.testaparatuocr.api.ApiInterface;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
+import retrofit2.Call;
+import retrofit2.Callback;
 
 public class BarcodeActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler {
 
     private ZXingScannerView scannerView;
     public static String barcode = "";
-    private List<Product> productList;
     private boolean inDb;
 
     final int RequestCameraPermissionID = 1001;
+
+    ApiInterface apiInterface;
 
 
     @Override
@@ -53,7 +46,7 @@ public class BarcodeActivity extends AppCompatActivity implements ZXingScannerVi
                         return;
                     }
 
-                }  else {
+                } else {
                     final AlertDialog.Builder builder = new AlertDialog.Builder(this);
                     builder.setTitle(R.string.alert_permission_title);
                     builder.setMessage(R.string.alert_permission_description);
@@ -63,19 +56,11 @@ public class BarcodeActivity extends AppCompatActivity implements ZXingScannerVi
                             finish();
                         }
                     });
-
-
-
                     builder.show();
-            }
+                }
             }
         }
     }
-
-
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,8 +70,9 @@ public class BarcodeActivity extends AppCompatActivity implements ZXingScannerVi
         scannerView = new ZXingScannerView(this);
         setContentView(scannerView);
 
-        inDb = false;
+        apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
 
+        inDb = false;
 
         if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(BarcodeActivity.this,
@@ -94,13 +80,6 @@ public class BarcodeActivity extends AppCompatActivity implements ZXingScannerVi
                     RequestCameraPermissionID);
             return;
         }
-
-
-
-
-
-
-
     }
 
     @Override
@@ -116,7 +95,6 @@ public class BarcodeActivity extends AppCompatActivity implements ZXingScannerVi
         scannerView.stopCamera();
     }
 
-
     @Override
     public void onPause() {
         super.onPause();
@@ -129,44 +107,43 @@ public class BarcodeActivity extends AppCompatActivity implements ZXingScannerVi
         final String scanResult = result.getText();
         barcode = result.getText();
         inDb = false;
+        checkBarcode(barcode);
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST,
-                Constants.URL_CHECKIFUSEDBARCODE,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            String temp = jsonObject.getString("exist");
-                            if (temp.contains("true")) inDb = true;
-                            if (inDb) {
-                                Intent intent = new Intent(BarcodeActivity.this, ResultActivity.class);
-                                finish();
-                                startActivity(intent);
-                            } else if (!inDb) {
-                                Intent intent = new Intent(BarcodeActivity.this, MainActivity.class);
-                                finish();
-                                startActivity(intent);
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
+    }
 
+    private void checkBarcode(String bcode){
+
+        Call<String> callType = apiInterface.checkIfBarcodeUsed(barcode);
+
+        callType.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call <String>call, retrofit2.Response <String> response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response.body());
+                    String temp = jsonObject.getString("exist");
+                    if (temp.contains("true")) inDb = true;
+                    if (inDb) {
+                        Intent intent = new Intent(BarcodeActivity.this, ResultActivity.class);
+                        finish();
+                        startActivity(intent);
+                    } else if (!inDb) {
+                        Intent intent = new Intent(BarcodeActivity.this, MainActivity.class);
+                        finish();
+                        startActivity(intent);
                     }
-                }) {
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("barcode", barcode);
-                return params;
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
             }
-        };
 
-        RequestHandler.getInstance(this).addToRequestQueue(stringRequest);
+            @Override
+            public void onFailure(Call <String> call, Throwable t) {
+
+            }
+        });
+
     }
 
     @Override

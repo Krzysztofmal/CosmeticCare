@@ -1,18 +1,25 @@
-package com.jkero.blackhawk.testaparatuocr;
+package com.jkero.blackhawk.testaparatuocr.api;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 
 public class Ingredient {
 
-    private Integer idIngredient;
-    private String nameIngredient;
-    private Integer danger;
-    private String description;
 
+    @SerializedName("id_ingredient") private Integer idIngredient;
+
+    @SerializedName("name_ingredient") private String nameIngredient;
+
+    @SerializedName("danger") private Integer danger;
+
+    @SerializedName("description") private String description;
+
+    /*
     public Ingredient() {
     }
 
@@ -22,6 +29,8 @@ public class Ingredient {
         this.danger = danger;
         this.description = description;
     }
+
+     */
 
     public Integer getIdIngredient() {
         return idIngredient;

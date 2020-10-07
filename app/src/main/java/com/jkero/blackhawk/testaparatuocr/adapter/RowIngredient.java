@@ -1,4 +1,4 @@
-package com.jkero.blackhawk.testaparatuocr;
+package com.jkero.blackhawk.testaparatuocr.adapter;
 
 import androidx.recyclerview.widget.RecyclerView;
 

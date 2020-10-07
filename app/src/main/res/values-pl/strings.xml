@@ -23,7 +23,7 @@
     <string name="scan_title" translatable="true">Zeskanowany kod: \n</string>
     <string name="title_activity_list" translatable="true">ListActivity</string>
     <string name="title_activity_result" translatable="true">ResultActivity</string>
-    <string name="set_language" translatable="true">.php</string>
+    <string name="set_language" translatable="true">pl/</string>
     <string name="dialog_title_database" translatable="true">Dodawanie składnika do ulubionych</string>
     <string name="dialog_added_database" translatable="true">Składnk został dodany do twojej listy.</string>
     <string name="dialog_removed_database" translatable="true">Składnik został usunięty z twojej listy.</string>

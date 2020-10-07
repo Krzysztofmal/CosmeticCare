@@ -1,4 +1,4 @@
-package com.jkero.blackhawk.testaparatuocr;
+package com.jkero.blackhawk.testaparatuocr.activities;
 
 import android.Manifest;
 import android.app.AlertDialog;
@@ -9,10 +9,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Handler;
-//import android.support.annotation.NonNull;
-//import android.support.v4.app.ActivityCompat;
-//import android.support.v4.content.ContextCompat;
-//import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.SparseArray;
@@ -22,32 +18,25 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
-
-
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;
-
-import org.json.JSONArray;
+import com.jkero.blackhawk.testaparatuocr.api.Ingredient;
+import com.jkero.blackhawk.testaparatuocr.R;
+import com.jkero.blackhawk.testaparatuocr.api.ApiClient;
+import com.jkero.blackhawk.testaparatuocr.api.ApiInterface;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import retrofit2.Call;
+import retrofit2.Callback;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -61,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static String mess;
 
+    ApiInterface apiInterface;
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -80,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
 //**
 
     public static boolean hasPermissions(Context context, String... permissions) {
@@ -95,7 +84,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 //**
-
 
     private static String uniqueID = null;
     private static final String PREF_UNIQUE_ID = "PREF_UNIQUE_ID";
@@ -113,7 +101,6 @@ public class MainActivity extends AppCompatActivity {
                 editor.commit();
             }
         }
-
         return uniqueID;
     }
 
@@ -133,56 +120,33 @@ public class MainActivity extends AppCompatActivity {
 
         scanDone = false;
         startScanning = true;
-
-
-        //addon
-
-        StringRequest stringRequestw = new StringRequest(Request.Method.POST,
-                Constants.URL_CHECKIFSCANNED,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-
-                        try {
-
-                            JSONObject jsonObject = new JSONObject(response);
-                            String temp = jsonObject.getString("scanned");
-                            if (temp.contains("true")) {
-
-                                finish();
-                                mess = "scanned by this device";
-
-
-                            } else {
-                                mess = null;
-                            }
-
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                }) {
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("barcode", BarcodeActivity.barcode);
-                params.put("device_id", id(getApplicationContext()));
-                return params;
-            }
-        };
-
-        RequestHandler.getInstance(this).addToRequestQueue(stringRequestw);
-
-
         deviceId = id(getApplicationContext()).toString();
+        apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
+
+        Call<String> callType = apiInterface.checkIfScanned(BarcodeActivity.barcode,deviceId);
+        callType.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, retrofit2.Response<String> response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response.body());
+                    String temp = jsonObject.getString("scanned");
+                    if (temp.contains("true")) {
+                        finish();
+                        mess = "scanned by this device";
+                    } else {
+                        mess = null;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+            }
+        });
+
         ingredientsList = new ArrayList<Ingredient>();
 
 
@@ -205,44 +169,23 @@ public class MainActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL);
         }
 
-
         //getting datas from db, list of ingredients with ID's
 
+        Call<List<Ingredient>> callType2 = apiInterface.getAllIngredients();
+        callType2.enqueue(new Callback<List<Ingredient>>() {
+            @Override
+            public void onResponse(Call<List<Ingredient>> call, retrofit2.Response<List<Ingredient>> response) {
+                ingredientsList.addAll(response.body());
+            }
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST,
-                Constants.URL_GETALLINGREDIENTS,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
+            @Override
+            public void onFailure(Call<List<Ingredient>> call, Throwable t) {
 
-                        try {
-
-                            //JSONObject jsonObject = new JSONObject(response);
-                            JSONArray jsonArray = new JSONArray(response);
-
-                            for (Ingredient ingr : Ingredient.fromJsonList(jsonArray)) {
-                                ingredientsList.add(ingr);
-                            }
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                });
-
-        RequestHandler.getInstance(this).addToRequestQueue(stringRequest);
+            }
+        });
 
 
         //finish
-
 
         TextRecognizer textRecognizer = new TextRecognizer.Builder(getApplicationContext()).build();
         if (!textRecognizer.isOperational()) {
@@ -276,12 +219,10 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
-
                 }
 
                 @Override
                 public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
-
                     cameraSource.stop();
                 }
             });
@@ -290,7 +231,6 @@ public class MainActivity extends AppCompatActivity {
             textRecognizer.setProcessor(new Detector.Processor<TextBlock>() {
                 @Override
                 public void release() {
-
                 }
 
                 @Override
@@ -302,14 +242,11 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void run() {
 
-
                                 String[] stringList;
 
                                 for (int i = 0; i < items.size(); ++i) {
 
-
                                     TextBlock item = items.valueAt(i);
-
 
                                     stringList = item.getValue()
                                             .replace(" ", "")
@@ -319,9 +256,7 @@ public class MainActivity extends AppCompatActivity {
                                             .toLowerCase()
                                             .split(",");
 
-
                                     //solution 1
-
 
                                     for (Ingredient ing : ingredientsList) {
 
@@ -351,50 +286,19 @@ public class MainActivity extends AppCompatActivity {
                                                 }
                                             }
                                         }
-
-                                        //solution 2
-/*
-                                    for (Ingredient ing : ingredientsList){
-                                        for (String nameIngr : stringList) {
-                                            if (nameIngr.toLowerCase().equals(ing.getName_ingredient().toLowerCase())){
-                                                System.out.println("\n \n ZNALAZŁEM \n \n");
-
-                                                if (!stringBuilder.toString().contains(nameIngr)) {
-                                                    stringBuilder.append(nameIngr);
-                                                    stringBuilder.append("\n");
-                                                    //dodanie do stringów id produktu
-                                                    if (idIngredients.isEmpty()) {
-                                                        idIngredients += ing.getId_ingredient();
-                                                    } else {
-                                                        idIngredients += "," + ing.getId_ingredient();
-                                                    }
-
-
-                                                }
-
-                                            }
-                                        } */
-
                                     }
-
                                 }
-
                                 textView.setText(stringBuilder.toString());
-
                             }
                         });
                     }
                 }
             });
         }
-
-
     }
 
     public void exit(View view) {
-
         finish();
-
     }
 
     public void goMenu(View view) {
@@ -405,8 +309,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onPause() {
-
-
         super.onPause();
     }
 
@@ -418,83 +320,52 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
 
-
         if (idIngredients.length() < 1 && scanDone == true) {
             Intent intent = new Intent(MainActivity.this, ScanResultActivity.class);
             startActivity(intent);
             mess = "1";
         } else {
-
-            StringRequest stringRequest = new StringRequest(Request.Method.POST,
-                    Constants.URL_DOSCAN,
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-
-                            try {
-                                if (mess != null) {
-                                    Intent intent = new Intent(MainActivity.this, ScanResultActivity.class);
-                                    startActivity(intent);
-                                } else {
-
-                                    JSONObject jsonObject = new JSONObject(response);
-                                    String temp = jsonObject.getString("message");
-                                    mess = temp;
-
-
-                                    Intent intent = new Intent(MainActivity.this, ScanResultActivity.class);
-                                    startActivity(intent);
-                                }
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-
-
+            Call<String> callType3 = apiInterface.doScan(BarcodeActivity.barcode,MainActivity.deviceId,MainActivity.idIngredients);
+            callType3.enqueue(new Callback<String>() {
+                @Override
+                public void onResponse(Call<String> call, retrofit2.Response<String> response) {
+                    try {
+                        if (mess != null) {
+                            Intent intent = new Intent(MainActivity.this, ScanResultActivity.class);
+                            startActivity(intent);
+                        } else {
+                            JSONObject jsonObject = new JSONObject(response.body());
+                            String temp = jsonObject.getString("message");
+                            mess = temp;
+                            Intent intent = new Intent(MainActivity.this, ScanResultActivity.class);
+                            startActivity(intent);
                         }
-                    },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-
-                        }
-                    }) {
-                protected Map<String, String> getParams() throws AuthFailureError {
-                    Map<String, String> params = new HashMap<>();
-                    params.put("barcode", BarcodeActivity.barcode);
-                    params.put("device_id", MainActivity.deviceId);
-                    params.put("ingredients", MainActivity.idIngredients);
-                    return params;
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
-            };
 
-            RequestHandler.getInstance(this).addToRequestQueue(stringRequest);
+                @Override
+                public void onFailure(Call<String> call, Throwable t) {
+
+                }
+            });
+
         }
-
         alert.dismiss();
-
-
         super.onDestroy();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(getString(R.string.scan_dialog_title));
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                /*final Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        finish();
-                        scanDone = true;
-                    }
-                }, 15000);*/
+
             }
         });
 
@@ -508,7 +379,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-
         super.onResume();
     }
 }

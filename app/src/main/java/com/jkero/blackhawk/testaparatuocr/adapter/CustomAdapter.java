@@ -1,15 +1,16 @@
-package com.jkero.blackhawk.testaparatuocr;
+package com.jkero.blackhawk.testaparatuocr.adapter;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.jkero.blackhawk.testaparatuocr.R;
+import com.jkero.blackhawk.testaparatuocr.database.DbHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
 
     Context context;
     List<RowIngredient> rowIngredients;
+
 
     public CustomAdapter(Context context, List<RowIngredient> rowIngredients) {
         this.context = context;
@@ -56,7 +58,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
             @Override
             public void onClick(View v) {
 
-
                 builder.setTitle(rowIngredient.getIngredientName());
 
                 builder.setMessage(rowIngredient.getIngredientDesc());
@@ -71,8 +72,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
             public boolean onLongClick(View v) {
                 if (context.getClass().getSimpleName().equals("ListActivity")) {
                     notifyDataSetChanged();
-
-
                     //}
 
                     DbHandler db;
@@ -88,8 +87,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
                     if (datasList.contains(rowIngredient.getId())) {
                         db.deleteIngredient(rowIngredient.getId());
                         add = false;
-                        //removeIngredient(position);
 
+                        //removeIngredient(position);
 
                         builder.setTitle(R.string.dialog_title_database);
 
@@ -97,8 +96,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
                         AlertDialog alert = builder.create();
 
                         alert.show();
-
-
                     }
                     if (add) {
 
@@ -110,18 +107,13 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
                         AlertDialog alert = builder.create();
 
                         alert.show();
-
-                         //addIngredient(rowIngredient,datasList.size());
+                        //addIngredient(rowIngredient,datasList.size());
                     }
-
-
                 }
                 return true;
             }
 
         });
-
-
     }
 
     private void clearIngredients() {
@@ -156,8 +148,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         notifyItemRemoved(position);
     }
 
-    public void addIngredient(RowIngredient newRowIngredient, int position)
-    {
+    public void addIngredient(RowIngredient newRowIngredient, int position) {
         if (position > rowIngredients.size()) return;
 
         rowIngredients.add(newRowIngredient);
@@ -196,47 +187,5 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
 
     }
 
-/*
-    @Override
-    public View getView(int i, View convertView, ViewGroup parent) {
 
-        ViewHolder viewHolder;
-        //View view = convertView;
-
-        if (view == null) {
-            LayoutInflater layoutInflater;
-            layoutInflater = LayoutInflater.from(context);
-            view = layoutInflater.inflate(R.layout.list_ingredients, null);
-        }
-
-        //Item p = getItem(position);
-        RowIngredient rowIngredient = (RowIngredient) getItem(i);
-
-        if (rowIngredient != null) {
-            TextView tvIngredientName = (TextView) view.findViewById(R.id.tvName);
-            TextView tvDescription = (TextView) view.findViewById(R.id.tvDesc);
-            ImageView ivEmoticon = (ImageView) view.findViewById(R.id.imageEmoticon);
-            ImageView ivStar = (ImageView) view.findViewById(R.id.imageStar);
-
-            if (tvIngredientName != null) {
-                tvIngredientName.setText(rowIngredient.getIngredientName());
-            }
-
-            if (tvDescription != null) {
-                tvDescription.setText(rowIngredient.getIngredientDesc());
-            }
-
-            if (ivEmoticon != null) {
-                ivEmoticon.setImageResource(rowIngredient.getImageEmoticon());
-            }
-
-            if (ivStar != null) {
-                ivStar.setImageResource(rowIngredient.getImageStar());
-            }
-        }
-
-        return view;
-
-
-    }*/
 }

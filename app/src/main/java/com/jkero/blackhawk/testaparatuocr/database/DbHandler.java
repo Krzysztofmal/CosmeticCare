@@ -1,4 +1,4 @@
-package com.jkero.blackhawk.testaparatuocr;
+package com.jkero.blackhawk.testaparatuocr.database;
 
 import android.content.ContentValues;
 import android.content.Context;
