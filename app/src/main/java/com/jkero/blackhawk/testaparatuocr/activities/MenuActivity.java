@@ -19,25 +19,24 @@ import com.google.android.gms.ads.initialization.OnInitializationCompleteListene
 import com.jkero.blackhawk.testaparatuocr.R;
 
 import androidx.appcompat.app.AppCompatActivity;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class MenuActivity extends AppCompatActivity {
 
     public static String myLanguage;
-
     private Dialog myDialog;
     private Button bClose;
-
     private InterstitialAd mInterstitialAd;
+    //private AdView mAdView;
+    @BindView(R.id.adView) AdView mAdView;
 
-    private AdView mAdView;
-
-    final int RequestGPSPermissionID = 1005;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-
+        ButterKnife.bind(this);
         myLanguage = "apk/"+getString(R.string.set_language);
 
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
@@ -45,7 +44,8 @@ public class MenuActivity extends AppCompatActivity {
             public void onInitializationComplete(InitializationStatus initializationStatus) {
             }
         });
-        mAdView = findViewById(R.id.adView);
+
+        //mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 

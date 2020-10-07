@@ -24,18 +24,25 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import butterknife.BindArray;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnItemLongClick;
+import butterknife.OnLongClick;
+import butterknife.Optional;
 import retrofit2.Call;
 import retrofit2.Callback;
 
 public class ListActivity extends AppCompatActivity {
 
     ApiInterface apiInterface;
-
-    TypedArray emoticons;
-    TypedArray stars;
+    //TypedArray emoticons;
+    @BindArray(R.array.emoticons) TypedArray emoticons;
+    //TypedArray stars;
+    @BindArray(R.array.stars) TypedArray stars;
     List<Ingredient> ingredientsListH;
-
-    private RecyclerView ingredientsList;
+    //private RecyclerView ingredientsList;
+    @BindView(R.id.lvIngredients) RecyclerView ingredientsList;
     List<RowIngredient> rowItems;
 
     //sqlite
@@ -101,16 +108,16 @@ public class ListActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
-
+        ButterKnife.bind(this);
         ingredientsListH = new ArrayList<Ingredient>();
 
-        emoticons = getResources().obtainTypedArray(R.array.emoticons);
-        stars = getResources().obtainTypedArray(R.array.stars);
+        //emoticons = getResources().obtainTypedArray(R.array.emoticons);
+        //stars = getResources().obtainTypedArray(R.array.stars);
 
         rowItems = new ArrayList<RowIngredient>();
         rowItems.clear();
 
-        ingredientsList = (RecyclerView) findViewById(R.id.lvIngredients);
+        //ingredientsList = (RecyclerView) findViewById(R.id.lvIngredients);
 
         ingredientsList.addItemDecoration(new DividerItemDecoration(ListActivity.this, LinearLayoutManager.VERTICAL));
 
@@ -122,6 +129,7 @@ public class ListActivity extends AppCompatActivity {
 
         getAllIngredients();
 
+        //ingredientsList.setOnLongClickListener((View.OnLongClickListener) this);
 
 
 /*
@@ -155,9 +163,11 @@ public class ListActivity extends AppCompatActivity {
 
                 return true;
             }
-        });*/
-
+        });
+*/
     }
+
+
 
     @Override
     protected void onStart() {

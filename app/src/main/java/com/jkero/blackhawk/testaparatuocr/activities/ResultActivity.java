@@ -26,6 +26,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import butterknife.BindArray;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -33,17 +36,12 @@ import retrofit2.Response;
 public class ResultActivity extends AppCompatActivity {
 
     ApiInterface apiInterface;
-
-    TextView textView;
-    RecyclerView lvIngredients;
-
+    @BindView(R.id.tvBarcode)TextView textView;
+    @BindView(R.id.lvIngredients)RecyclerView lvIngredients;
     List<RowIngredient> rowItems;
-
-    TypedArray emoticons;
-    TypedArray stars;
-
+    @BindArray(R.array.emoticons)TypedArray emoticons;
+    @BindArray(R.array.stars)TypedArray stars;
     private InterstitialAd mInterstitialAd;
-
     //sqlite
     DbHandler db;
     ArrayList<Integer> datasList;
@@ -82,20 +80,22 @@ public class ResultActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
 
+        ButterKnife.bind(this);
+
         rowItems = new ArrayList<RowIngredient>();
 
-        lvIngredients = (RecyclerView) findViewById(R.id.lvIngredients);
+        //lvIngredients = (RecyclerView) findViewById(R.id.lvIngredients);
         lvIngredients.addItemDecoration(new DividerItemDecoration(ResultActivity.this, LinearLayoutManager.VERTICAL));
 
         RecyclerView.LayoutManager recyce = new
                 LinearLayoutManager(ResultActivity.this, LinearLayoutManager.VERTICAL, false);
         lvIngredients.setLayoutManager(recyce);
 
-        textView = (TextView) findViewById(R.id.tvBarcode);
+        //textView = (TextView) findViewById(R.id.tvBarcode);
         textView.append(" " + BarcodeActivity.barcode);
 
-        emoticons = getResources().obtainTypedArray(R.array.emoticons);
-        stars = getResources().obtainTypedArray(R.array.stars);
+        //emoticons = getResources().obtainTypedArray(R.array.emoticons);
+        //stars = getResources().obtainTypedArray(R.array.stars);
 
         getResult(BarcodeActivity.barcode);
 
@@ -103,7 +103,7 @@ public class ResultActivity extends AppCompatActivity {
 
     }
 
- 
+
 
 
     private void getResult(String barcode){

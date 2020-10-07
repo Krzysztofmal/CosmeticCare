@@ -35,21 +35,23 @@ import java.util.UUID;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 
 public class MainActivity extends AppCompatActivity {
 
-    SurfaceView cameraView;
-    TextView textView;
+    //SurfaceView cameraView;
+    @BindView(R.id.surface_view) SurfaceView cameraView;
+    //TextView textView;
+    @BindView(R.id.text_view) TextView textView;
     CameraSource cameraSource;
     final int RequestCameraPermissionID = 1001;
     private List<Ingredient> ingredientsList;
     public static String idIngredients = "";
     public static String deviceId = "";
-
     public static String mess;
-
     ApiInterface apiInterface;
 
     @Override
@@ -157,8 +159,9 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-        cameraView = (SurfaceView) findViewById(R.id.surface_view);
-        textView = (TextView) findViewById(R.id.text_view);
+        ButterKnife.bind(this);
+        //cameraView = (SurfaceView) findViewById(R.id.surface_view);
+        //textView = (TextView) findViewById(R.id.text_view);
 
 //***
 

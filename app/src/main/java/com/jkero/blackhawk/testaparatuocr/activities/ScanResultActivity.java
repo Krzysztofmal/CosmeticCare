@@ -25,25 +25,24 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import butterknife.BindArray;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 
 public class ScanResultActivity extends AppCompatActivity {
 
 
-    RecyclerView listviewIngredients;
-    TextView textviewTitle;
+    @BindView(R.id.listviewIngredients)RecyclerView listviewIngredients;
+    @BindView(R.id.textviewTitle)TextView textviewTitle;
     String temp;
-
     ApiInterface apiInterface;
-
     private InterstitialAd mInterstitialAd;
-
-    TypedArray emoticons;
-    TypedArray stars;
+    @BindArray(R.array.emoticons)TypedArray emoticons;
+    @BindArray(R.array.stars)TypedArray stars;
     List<Ingredient> ingredientsListH;
     List<RowIngredient> rowItems;
-
     //sqlite
     DbHandler db;
     ArrayList<Integer> datasList;
@@ -81,18 +80,18 @@ public class ScanResultActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan_result);
-
+        ButterKnife.bind(this);
         ingredientsListH = new ArrayList<Ingredient>();
 
-        emoticons = getResources().obtainTypedArray(R.array.emoticons);
-        stars = getResources().obtainTypedArray(R.array.stars);
+        //emoticons = getResources().obtainTypedArray(R.array.emoticons);
+        //stars = getResources().obtainTypedArray(R.array.stars);
 
         rowItems = new ArrayList<RowIngredient>();
         rowItems.clear();
 
-        listviewIngredients = (RecyclerView) findViewById(R.id.listviewIngredients);
+        //listviewIngredients = (RecyclerView) findViewById(R.id.listviewIngredients);
         listviewIngredients.addItemDecoration(new DividerItemDecoration(ScanResultActivity.this, LinearLayoutManager.VERTICAL));
-        textviewTitle = (TextView) findViewById(R.id.textviewTitle);
+        //textviewTitle = (TextView) findViewById(R.id.textviewTitle);
 
         textviewTitle.append(getString(R.string.scan_result_title));
 

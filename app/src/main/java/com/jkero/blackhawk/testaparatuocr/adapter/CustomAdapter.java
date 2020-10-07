@@ -17,6 +17,8 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder> {
 
@@ -169,19 +171,20 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
 
     // Private view holder class
     public class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView imageStar;
-        ImageView imageEmoticon;
-        TextView ingredientName;
-        TextView ingredientDesc;
+        @BindView(R.id.imageStar)ImageView imageStar;
+        @BindView(R.id.imageEmoticon)ImageView imageEmoticon;
+        @BindView(R.id.tvName)TextView ingredientName;
+        @BindView(R.id.tvDesc)TextView ingredientDesc;
         private View parentView;
 
         public ViewHolder(@NonNull View view) {
             super(view);
             this.parentView = view;
-            this.imageStar = (ImageView) view.findViewById(R.id.imageStar);
-            this.imageEmoticon = (ImageView) view.findViewById(R.id.imageEmoticon);
-            this.ingredientName = (TextView) view.findViewById(R.id.tvName);
-            this.ingredientDesc = (TextView) view.findViewById(R.id.tvDesc);
+            ButterKnife.bind(this, view);
+            //this.imageStar = (ImageView) view.findViewById(R.id.imageStar);
+            //this.imageEmoticon = (ImageView) view.findViewById(R.id.imageEmoticon);
+            //this.ingredientName = (TextView) view.findViewById(R.id.tvName);
+            //this.ingredientDesc = (TextView) view.findViewById(R.id.tvDesc);
         }
 
 

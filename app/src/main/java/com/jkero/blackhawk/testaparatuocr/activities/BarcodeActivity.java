@@ -113,7 +113,7 @@ public class BarcodeActivity extends AppCompatActivity implements ZXingScannerVi
 
     private void checkBarcode(String bcode){
 
-        Call<String> callType = apiInterface.checkIfBarcodeUsed(barcode);
+        Call<String> callType = apiInterface.checkIfBarcodeUsed(bcode);
 
         callType.enqueue(new Callback<String>() {
             @Override
