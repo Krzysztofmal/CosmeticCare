@@ -33,7 +33,7 @@ import butterknife.Optional;
 import retrofit2.Call;
 import retrofit2.Callback;
 
-public class ListActivity extends AppCompatActivity {
+public class ListActivity extends AppCompatActivity  {
 
     ApiInterface apiInterface;
     //TypedArray emoticons;
@@ -48,6 +48,8 @@ public class ListActivity extends AppCompatActivity {
     //sqlite
     DbHandler db;
     ArrayList<Integer> datasList;
+
+    IRecyclerViewClickListener listener;
 
     public void getAllIngredients() {
         Call<List<Ingredient>> call = apiInterface.getAllIngredients();
@@ -78,8 +80,9 @@ public class ListActivity extends AppCompatActivity {
                     }
 
                 }
+                //IRecyclerViewClickListener listener = new IRecyclerViewClickListener();
 
-                CustomAdapter adapter = new CustomAdapter(ListActivity.this, rowItems);
+                CustomAdapter adapter = new CustomAdapter(ListActivity.this, rowItems,listener);
                 ingredientsList.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
 
@@ -127,20 +130,15 @@ public class ListActivity extends AppCompatActivity {
                 LinearLayoutManager(ListActivity.this, LinearLayoutManager.VERTICAL, false);
         ingredientsList.setLayoutManager(recyce);
 
+
+
+
         getAllIngredients();
 
-        //ingredientsList.setOnLongClickListener((View.OnLongClickListener) this);
 
-
-/*
-        ingredientsList.setOnItemClickListener(this);
-
-
-        ingredientsList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        listener = new IRecyclerViewClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
-                                           int pos, long id) {
-
+            public void onLongClicked(int pos) {
                 boolean add = true;
                 if (datasList.contains(rowItems.get(pos).getId())) {
 
@@ -161,10 +159,10 @@ public class ListActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
 
-                return true;
+                //return true;
             }
-        });
-*/
+        };
+
     }
 
 

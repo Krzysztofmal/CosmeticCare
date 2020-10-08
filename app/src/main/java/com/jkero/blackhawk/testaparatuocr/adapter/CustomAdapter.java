@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jkero.blackhawk.testaparatuocr.R;
+import com.jkero.blackhawk.testaparatuocr.activities.IRecyclerViewClickListener;
 import com.jkero.blackhawk.testaparatuocr.database.DbHandler;
 
 import java.util.ArrayList;
@@ -24,7 +25,13 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
 
     Context context;
     List<RowIngredient> rowIngredients;
+    IRecyclerViewClickListener listener;
 
+    public CustomAdapter(Context context, List<RowIngredient> rowIngredients, IRecyclerViewClickListener listener){
+        this.context = context;
+        this.rowIngredients = rowIngredients;
+        this.listener = listener;
+    }
 
     public CustomAdapter(Context context, List<RowIngredient> rowIngredients) {
         this.context = context;
@@ -44,6 +51,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         );
     }
 
+
+
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         final RowIngredient rowIngredient = (RowIngredient) getItem(position);
@@ -56,6 +65,13 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         final RowIngredient selectedIngredient = (RowIngredient) getItem(position);
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+
+
+
+
+
+
         holder.parentView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,53 +85,9 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
             }
         });
 
-        holder.parentView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                if (context.getClass().getSimpleName().equals("ListActivity")) {
-                    notifyDataSetChanged();
-                    //}
 
-                    DbHandler db;
-                    ArrayList<Integer> datasList;
-                    db = new DbHandler(context);
-                    final Cursor datas = db.getData();
-                    datasList = new ArrayList<Integer>();
-                    while (datas.moveToNext()) {
-                        datasList.add(datas.getInt(0));
-                    }
 
-                    boolean add = true;
-                    if (datasList.contains(rowIngredient.getId())) {
-                        db.deleteIngredient(rowIngredient.getId());
-                        add = false;
-
-                        //removeIngredient(position);
-
-                        builder.setTitle(R.string.dialog_title_database);
-
-                        builder.setMessage(R.string.dialog_removed_database);
-                        AlertDialog alert = builder.create();
-
-                        alert.show();
-                    }
-                    if (add) {
-
-                        db.addIngredient(rowIngredient.getId());
-
-                        builder.setTitle(R.string.dialog_title_database);
-
-                        builder.setMessage(R.string.dialog_added_database);
-                        AlertDialog alert = builder.create();
-
-                        alert.show();
-                        //addIngredient(rowIngredient,datasList.size());
-                    }
-                }
-                return true;
-            }
-
-        });
+       
     }
 
     private void clearIngredients() {
@@ -181,6 +153,13 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
             super(view);
             this.parentView = view;
             ButterKnife.bind(this, view);
+            view.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    listener.onLongClicked(getAdapterPosition());
+                    return true;
+                }
+            });
             //this.imageStar = (ImageView) view.findViewById(R.id.imageStar);
             //this.imageEmoticon = (ImageView) view.findViewById(R.id.imageEmoticon);
             //this.ingredientName = (TextView) view.findViewById(R.id.tvName);

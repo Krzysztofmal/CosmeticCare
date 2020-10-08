@@ -213,10 +213,9 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             app:cardElevation="8dp"
-            app:cardCornerRadius="8dp"
             android:onClick="exit"
+            app:cardCornerRadius="8dp"
             android:foreground="?android:attr/selectableItemBackground"
-
             android:clickable="true"
 
             >

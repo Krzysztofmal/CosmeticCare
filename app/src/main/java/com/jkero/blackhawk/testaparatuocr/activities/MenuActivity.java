@@ -19,8 +19,10 @@ import com.google.android.gms.ads.initialization.OnInitializationCompleteListene
 import com.jkero.blackhawk.testaparatuocr.R;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MenuActivity extends AppCompatActivity {
 
@@ -30,6 +32,7 @@ public class MenuActivity extends AppCompatActivity {
     private InterstitialAd mInterstitialAd;
     //private AdView mAdView;
     @BindView(R.id.adView) AdView mAdView;
+
 
 
     @Override
