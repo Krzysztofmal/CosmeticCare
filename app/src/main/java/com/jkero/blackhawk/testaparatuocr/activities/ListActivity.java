@@ -20,6 +20,7 @@ import com.jkero.blackhawk.testaparatuocr.database.DbHandler;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -102,12 +103,7 @@ public class ListActivity extends AppCompatActivity  {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        db = new DbHandler(this);
-        final Cursor datas = db.getData();
-        datasList = new ArrayList<Integer>();
-        while (datas.moveToNext()) {
-            datasList.add(datas.getInt(0));
-        }
+        getLocalDb();
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
@@ -129,7 +125,7 @@ public class ListActivity extends AppCompatActivity  {
         RecyclerView.LayoutManager recyce = new
                 LinearLayoutManager(ListActivity.this, LinearLayoutManager.VERTICAL, false);
         ingredientsList.setLayoutManager(recyce);
-
+        final AlertDialog.Builder builder = new AlertDialog.Builder(ListActivity.this);
 
 
 
@@ -140,32 +136,49 @@ public class ListActivity extends AppCompatActivity  {
             @Override
             public void onLongClicked(int pos) {
                 boolean add = true;
+
                 if (datasList.contains(rowItems.get(pos).getId())) {
-
                     db.deleteIngredient(rowItems.get(pos).getId());
-
                     add = false;
+                    rowItems.clear();
+                    getLocalDb();
+                    getAllIngredients();
 
-                    Intent intent = new Intent(ListActivity.this, ListActivity.class);
-                    finish();
-                    startActivity(intent);
+                    builder.setTitle(R.string.dialog_title_database);
+
+                    builder.setMessage(R.string.dialog_removed_database);
+                    AlertDialog alert = builder.create();
+
+                    alert.show();
                 }
 
                 if (add) {
                     db.addIngredient(rowItems.get(pos).getId());
+                    rowItems.clear();
+                    getLocalDb();
+                    getAllIngredients();
 
-                    Intent intent = new Intent(ListActivity.this, ListActivity.class);
-                    finish();
-                    startActivity(intent);
+                    builder.setTitle(R.string.dialog_title_database);
+
+                    builder.setMessage(R.string.dialog_added_database);
+                    AlertDialog alert = builder.create();
+
+                    alert.show();
                 }
 
-                //return true;
             }
         };
 
     }
 
-
+    private void getLocalDb(){
+        db = new DbHandler(this);
+        final Cursor datas = db.getData();
+        datasList = new ArrayList<Integer>();
+        while (datas.moveToNext()) {
+            datasList.add(datas.getInt(0));
+        }
+    }
 
     @Override
     protected void onStart() {
