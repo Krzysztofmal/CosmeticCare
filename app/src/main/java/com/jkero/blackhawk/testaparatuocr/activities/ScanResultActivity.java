@@ -46,6 +46,7 @@ public class ScanResultActivity extends AppCompatActivity {
     //sqlite
     DbHandler db;
     ArrayList<Integer> datasList;
+    IRecyclerViewClickListener listener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,6 +103,13 @@ public class ScanResultActivity extends AppCompatActivity {
         RecyclerView.LayoutManager recyce = new
                 LinearLayoutManager(ScanResultActivity.this, LinearLayoutManager.VERTICAL, false);
         listviewIngredients.setLayoutManager(recyce);
+
+        listener = new IRecyclerViewClickListener() {
+            @Override
+            public void onLongClicked(int pos) {
+
+            }
+        };
 
         switch (MainActivity.mess) {
             case "scanned by this device":
@@ -179,7 +187,7 @@ public class ScanResultActivity extends AppCompatActivity {
                         rowItems.add(new RowIngredient(i.getNameIngredient(), i.getDescription(), emoticons.getResourceId(i.getDanger(), 0), stars.getResourceId(0, 0), i.getIdIngredient()));
                     }
                 }
-                CustomAdapter adapter = new CustomAdapter(ScanResultActivity.this, rowItems);
+                CustomAdapter adapter = new CustomAdapter(ScanResultActivity.this, rowItems,listener);
                 listviewIngredients.setAdapter(adapter);
                 listviewIngredients.setLayoutManager(new LinearLayoutManager(ScanResultActivity.this));
             }
@@ -216,7 +224,7 @@ public class ScanResultActivity extends AppCompatActivity {
                         rowItems.add(new RowIngredient(i.getNameIngredient(), i.getDescription(), emoticons.getResourceId(i.getDanger(), 0), stars.getResourceId(0, 0), i.getIdIngredient()));
                     }
                 }
-                CustomAdapter adapter = new CustomAdapter(ScanResultActivity.this, rowItems);
+                CustomAdapter adapter = new CustomAdapter(ScanResultActivity.this, rowItems,listener);
                 listviewIngredients.setAdapter(adapter);
                 listviewIngredients.setLayoutManager(new LinearLayoutManager(ScanResultActivity.this));
             }

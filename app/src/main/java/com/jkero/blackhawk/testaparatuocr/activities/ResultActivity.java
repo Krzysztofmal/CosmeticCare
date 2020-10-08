@@ -45,6 +45,7 @@ public class ResultActivity extends AppCompatActivity {
     //sqlite
     DbHandler db;
     ArrayList<Integer> datasList;
+    IRecyclerViewClickListener listener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +95,13 @@ public class ResultActivity extends AppCompatActivity {
         //textView = (TextView) findViewById(R.id.tvBarcode);
         textView.append(" " + BarcodeActivity.barcode);
 
+        listener = new IRecyclerViewClickListener() {
+            @Override
+            public void onLongClicked(int pos) {
+
+            }
+        };
+
         //emoticons = getResources().obtainTypedArray(R.array.emoticons);
         //stars = getResources().obtainTypedArray(R.array.stars);
 
@@ -132,7 +140,7 @@ public class ResultActivity extends AppCompatActivity {
                             rowItems.add(new RowIngredient(i.getNameIngredient(), i.getDescription(), emoticons.getResourceId(i.getDanger(), 0), stars.getResourceId(0, 0), i.getIdIngredient()));
                         }
                     }
-                    CustomAdapter adapter = new CustomAdapter(ResultActivity.this, rowItems);
+                    CustomAdapter adapter = new CustomAdapter(ResultActivity.this, rowItems,listener);
                     lvIngredients.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
 

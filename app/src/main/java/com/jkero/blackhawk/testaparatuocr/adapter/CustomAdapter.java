@@ -157,7 +157,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
                 @Override
                 public boolean onLongClick(View v) {
                     listener.onLongClicked(getAdapterPosition());
-                    return true;
+                    return false;
                 }
             });
             //this.imageStar = (ImageView) view.findViewById(R.id.imageStar);
